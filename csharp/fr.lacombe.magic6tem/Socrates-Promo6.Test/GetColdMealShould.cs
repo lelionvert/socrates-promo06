@@ -13,7 +13,10 @@ namespace Socrates_Promo6.Test
             DateTime limitHour = new DateTime(2018, 10, 4, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 10, 4, 20, 0, 0);
 
-            int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
+            var checkIn = new CheckIn(arrivalHour);
+            var limitTime = new DinerTime(limitHour);
+
+            int nbColdMeals = GetColdMeal(checkIn, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
 
@@ -23,7 +26,7 @@ namespace Socrates_Promo6.Test
             DateTime limitHour = new DateTime(2018, 10, 4, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 10, 4, 22, 0, 0);
 
-            int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
+            int nbColdMeals = GetColdMeal(new CheckIn(arrivalHour), new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(1);
         }
 
@@ -33,7 +36,7 @@ namespace Socrates_Promo6.Test
             DateTime limitHour = new DateTime(2018, 10, 4, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 10, 5, 1, 0, 0);
 
-            int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
+            int nbColdMeals = GetColdMeal(new CheckIn(arrivalHour), new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
 
@@ -43,16 +46,16 @@ namespace Socrates_Promo6.Test
             DateTime limitHour = new DateTime(2018, 10, 31, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 11, 1, 1, 0, 0);
 
-            int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
+            int nbColdMeals = GetColdMeal(new CheckIn(arrivalHour), new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
 
 
-        private int GetColdMeal(DateTime limitHour, DateTime arrivalHour)
+        private int GetColdMeal(CheckIn checkin, DinerTime dinerTime)
         {
-            if (ArrivalDayIsEqualToCheckinDay(limitHour, arrivalHour))
+            if (checkin.IsSameDay(dinerTime.Start))
             {
-                if (arrivalHour < limitHour)
+                if (checkin.ArrivalTime < dinerTime.Start)
                     return 0;
 
                 return 1;
@@ -61,9 +64,6 @@ namespace Socrates_Promo6.Test
             return 0;
         }
 
-        private bool ArrivalDayIsEqualToCheckinDay(DateTime checkinDate, DateTime arrivalDate)
-        {
-            return checkinDate.Date.Equals(arrivalDate.Date);
-        }
+      
     }
 }
