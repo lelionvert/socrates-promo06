@@ -19,4 +19,22 @@ class CheckInTest {
 
     }
 
+    @Test
+    public void given_checkindate_with_one_participant_should_return_one_meal(){
+        Participant participant = new Participant();
+        CheckIn checkInWithOneParticipant = new CheckIn();
+        checkInWithOneParticipant.addParticipant(participant);
+        assertThat(checkInWithOneParticipant.getCountOfColdMealFor()).isEqualTo(1);
+    }
+
+    @Test
+    public void given_checkindate_with_two_participant_should_return_two_meal(){
+        Participant participant1 = new Participant();
+        Participant participant2 = new Participant();
+        CheckIn checkInWithOneParticipant = new CheckIn();
+        checkInWithOneParticipant.addParticipant(participant1);
+        checkInWithOneParticipant.addParticipant(participant2);
+        assertThat(checkInWithOneParticipant.getCountOfColdMealFor()).isEqualTo(2);
+    }
+
 }
