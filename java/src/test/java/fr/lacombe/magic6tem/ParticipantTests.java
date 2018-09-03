@@ -19,3 +19,11 @@ class IsArrivalTimeAfterShould {
 
     }
 }
+
+class FactoryShould {
+    @Test
+    void return_new_participant_with_corresponding_arrivalTime() {
+        assertThat(Participant.ofArrivalTime(12,00))
+                .isEqualTo(new Participant(LocalTime.of(12,0)));
+    }
+}
