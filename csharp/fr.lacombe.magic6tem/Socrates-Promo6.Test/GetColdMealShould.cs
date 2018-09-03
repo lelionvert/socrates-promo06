@@ -16,6 +16,7 @@ namespace Socrates_Promo6.Test
             int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
             Check.That(nbColdMeals).Equals(0);
         }
+
         [Fact]
         public void Return_one_cold_meal_when_arrival_hour_is_after_limit_hour()
         {
@@ -26,9 +27,21 @@ namespace Socrates_Promo6.Test
             Check.That(nbColdMeals).Equals(1);
         }
 
+        [Fact]
+        public void Return_no_cold_meal_when_arrival_day_is_after_limit_day()
+        {
+            DateTime limitHour = new DateTime(2018, 10, 4, 21, 0, 0);
+            DateTime arrivalHour = new DateTime(2018, 10, 5, 1, 0, 0);
+
+            int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
+            Check.That(nbColdMeals).Equals(0);
+        }
 
         private int GetColdMeal(DateTime limitHour, DateTime arrivalHour)
         {
+            if (arrivalHour.Day > limitHour.Day)
+                return 0;
+
             if (arrivalHour < limitHour)
                 return 0;
             return 1;
