@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 
 public class CheckIn {
 
-    final LocalDateTime arrivalDateTime;
+    private final LocalDateTime arrivalDateTime;
 
     public CheckIn(LocalDateTime arrivalDateTime) {
         this.arrivalDateTime = arrivalDateTime;
+    }
+
+    boolean isAfter(LocalDateTime dateTime) {
+        return arrivalDateTime.isAfter(dateTime);
     }
 }

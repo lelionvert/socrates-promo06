@@ -13,7 +13,8 @@ public class Meal {
 
     public int getCountOfColdMeal() {
         return (int) checkIns.stream()
-                .filter(x -> x.arrivalDateTime.isAfter(THURSDAY_COLD_DINER_BEGINNING_HOUR))
+                .filter(checkIn -> checkIn.isAfter(THURSDAY_COLD_DINER_BEGINNING_HOUR))
                 .count();
 }
+
 }
