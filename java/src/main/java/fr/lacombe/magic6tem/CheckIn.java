@@ -6,4 +6,9 @@ import java.util.List;
 
 public class CheckIn {
 
+    final LocalDateTime arrivalDateTime;
+
+    public CheckIn(LocalDateTime arrivalDateTime) {
+        this.arrivalDateTime = arrivalDateTime;
+    }
 }
