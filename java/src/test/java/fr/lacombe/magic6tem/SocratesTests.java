@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +21,14 @@ class GetColdMealShould {
         int coldMeals = conference.getColdMeals();
         assertThat(coldMeals).isEqualTo(0);
     }
+    @Test
+    public void return_zero_if_one_participant_checked_in_before_21_pm() {
+        Participant participant = new Participant(LocalTime.of(20, 0));
+        Conference conference = new Conference(participant);
+        int coldMeals = conference.getColdMeals2();
+        assertThat(coldMeals).isEqualTo(0);
+    }
+
 
     @Test
     public void return_one_if_one_checked_in_after_21_pm() {
