@@ -55,15 +55,14 @@ namespace Socrates_Promo6.Test
         {
             if (checkin.IsSameDay(dinerTime.Start))
             {
-                if (checkin.ArrivalTime < dinerTime.Start)
+                if (checkin.IsBefore(dinerTime.Start))
                     return 0;
-
                 return 1;
             }
 
             return 0;
         }
 
-      
+
     }
 }

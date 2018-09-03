@@ -5,7 +5,6 @@ namespace Socrates_Promo6
     public class CheckIn
     {
         private readonly DateTime _arrivalTime;
-        public DateTime ArrivalTime => _arrivalTime;
 
 
         public CheckIn(DateTime arrivalTime)
@@ -15,7 +14,12 @@ namespace Socrates_Promo6
 
         public bool IsSameDay(DateTime dinnerTime)
         {
-            return ArrivalTime.Date.Equals(dinnerTime.Date);
+            return _arrivalTime.Date.Equals(dinnerTime.Date);
+        }
+
+        public bool IsBefore(DateTime date)
+        {
+            return _arrivalTime < date;
         }
     }
 }
