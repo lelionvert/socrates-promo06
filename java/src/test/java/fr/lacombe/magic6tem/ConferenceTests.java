@@ -39,12 +39,21 @@ class GetColdMealShould {
     }
 
     @Test
-    public void return_two_if_two_participant_checked_in_after_21_pm() {
+    public void return_two_if_two_participants_checked_in_after_21_pm() {
         participants.add(LATE_PARTICIPANT);
         participants.add(LATE_PARTICIPANT);
         Conference conference = new Conference(participants);
         int coldMeals = conference.getColdMeals();
         assertThat(coldMeals).isEqualTo(2);
+    }
+
+    @Test
+    public void return_zero_if_two_participants_checked_in_before_21_pm() {
+        participants.add(EARLY_PARTICIPANT);
+        participants.add(EARLY_PARTICIPANT);
+        Conference conference = new Conference(participants);
+        int coldMeals = conference.getColdMeals();
+        assertThat(coldMeals).isEqualTo(0);
     }
 
 }

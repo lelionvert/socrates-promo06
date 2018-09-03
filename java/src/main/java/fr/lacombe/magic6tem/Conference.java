@@ -1,7 +1,6 @@
 package fr.lacombe.magic6tem;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Conference {
