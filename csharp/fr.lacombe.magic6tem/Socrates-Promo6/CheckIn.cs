@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Socrates_Promo6
 {
     public class CheckIn
     {
         private readonly DateTime _arrivalTime;
-
 
         public CheckIn(DateTime arrivalTime)
         {
@@ -21,5 +21,6 @@ namespace Socrates_Promo6
         {
             return _arrivalTime < date;
         }
+
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.Design;
 using NFluent;
 using Xunit;
 
+
 namespace Socrates_Promo6.Test
 {
     public class GetColdMealShould
@@ -17,7 +18,11 @@ namespace Socrates_Promo6.Test
             var checkIn = new CheckIn(arrivalHour);
             var limitTime = new DinerTime(limitHour);
 
-            int nbColdMeals = GetColdMeal(checkIn, new DinerTime(limitHour));
+            List<CheckIn> checkIns = new List<CheckIn>()
+            {
+                checkIn  
+            };
+            int nbColdMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
 
@@ -26,8 +31,13 @@ namespace Socrates_Promo6.Test
         {
             DateTime limitHour = new DateTime(2018, 10, 4, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 10, 4, 22, 0, 0);
+            
 
-            int nbColdMeals = GetColdMeal(new CheckIn(arrivalHour), new DinerTime(limitHour));
+            List<CheckIn> checkIns = new List<CheckIn>()
+            {
+                new CheckIn(arrivalHour)  
+            };
+            int nbColdMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(1);
         }
 
@@ -37,7 +47,11 @@ namespace Socrates_Promo6.Test
             DateTime limitHour = new DateTime(2018, 10, 4, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 10, 5, 1, 0, 0);
 
-            int nbColdMeals = GetColdMeal(new CheckIn(arrivalHour), new DinerTime(limitHour));
+            List<CheckIn> checkIns = new List<CheckIn>()
+            {
+                new CheckIn(arrivalHour)  
+            };
+            int nbColdMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
 
@@ -47,12 +61,16 @@ namespace Socrates_Promo6.Test
             DateTime limitHour = new DateTime(2018, 10, 31, 21, 0, 0);
             DateTime arrivalHour = new DateTime(2018, 11, 1, 1, 0, 0);
 
-            int nbColdMeals = GetColdMeal(new CheckIn(arrivalHour), new DinerTime(limitHour));
+            List<CheckIn> checkIns = new List<CheckIn>()
+            {
+                new CheckIn(arrivalHour)  
+            };
+            int nbColdMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
 
         [Fact]
-        public void Return_no_cold_meal_when_all_checkins_arrive_before_limit_hour()
+        public void Return_no_cold_meal_when_all_checkIns_arrive_before_limit_hour()
         {
             DateTime limitHour = new DateTime(2018, 10, 31, 21, 0, 0);
 
@@ -65,11 +83,12 @@ namespace Socrates_Promo6.Test
 
             };
 
-            int nbColdMeals = GetColdMeal(checkIns, new DinerTime(limitHour));
+            int nbColdMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(0);
         }
+
         [Fact]
-        public void Return_two_cold_meals_when_two_checkins_arrive_after_limit_hour()
+        public void Return_two_cold_meals_when_two_checkIns_arrive_after_limit_hour()
         {
             DateTime limitHour = new DateTime(2018, 10, 31, 21, 0, 0);
 
@@ -84,35 +103,8 @@ namespace Socrates_Promo6.Test
 
             };
 
-            int nbColdMeals = GetColdMeal(checkIns, new DinerTime(limitHour));
+            int nbColdMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(limitHour));
             Check.That(nbColdMeals).Equals(2);
-        }
-
-        private int GetColdMeal(List<CheckIn> checkIns, DinerTime dinerTime)
-        {
-            int count=0;
-            foreach (var checkIn in checkIns)
-            {
-                if (checkIn.IsSameDay(dinerTime.Start))
-                {
-                    if (checkIn.IsBefore(dinerTime.Start))
-                        continue;
-                    count++;
-                }
-            }
-            return count;
-        }
-
-        private int GetColdMeal(CheckIn checkin, DinerTime dinerTime)
-        {
-            if (checkin.IsSameDay(dinerTime.Start))
-            {
-                if (checkin.IsBefore(dinerTime.Start))
-                    return 0;
-                return 1;
-            }
-
-            return 0;
         }
 
 
