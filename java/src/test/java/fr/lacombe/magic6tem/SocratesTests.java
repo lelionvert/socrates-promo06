@@ -18,6 +18,7 @@ class GetColdMealShould {
         int coldMeals = conference.getColdMeals();
         assertThat(coldMeals).isEqualTo(0);
     }
+
     @Test
     public void return_one_if_one_checked_in_after_21_pm() {
         LocalTime arrivalTime = LocalTime.of(22, 0);
@@ -26,6 +27,16 @@ class GetColdMealShould {
         assertThat(coldMeals).isEqualTo(1);
     }
 
+    @Test
+    public void return_one_if_two_checked_in_but_only_one_after_21_pm() {
+        LocalTime arrivalTime = LocalTime.of(22, 0);
+        LocalTime arrivalTime2 = LocalTime.of(20, 0);
+        Conference conference = new Conference(arrivalTime,arrivalTime2);
+        int coldMeals = conference.getColdMeals();
+        assertThat(coldMeals).isEqualTo(1);
+    }
+
+    //TODO : Add test loic!
 }
 
 
