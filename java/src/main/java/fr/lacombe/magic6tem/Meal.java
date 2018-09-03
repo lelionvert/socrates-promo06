@@ -15,5 +15,5 @@ public class Meal {
         return (int) checkIns.stream()
                 .filter(x -> x.arrivalDateTime.isAfter(THURSDAY_NINE_PM))
                 .count();
-    }
+}
 }
