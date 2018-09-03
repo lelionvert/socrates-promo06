@@ -37,9 +37,20 @@ namespace Socrates_Promo6.Test
             Check.That(nbColdMeals).Equals(0);
         }
 
+        [Fact]
+        public void Return_no_cold_meal_when_limit_day_is_the_last_day_of_the_month_and_arrival_is_first_day_of_the_next_month()
+        {
+            DateTime limitHour = new DateTime(2018, 10, 31, 21, 0, 0);
+            DateTime arrivalHour = new DateTime(2018, 11, 1, 1, 0, 0);
+
+            int nbColdMeals = GetColdMeal(limitHour, arrivalHour);
+            Check.That(nbColdMeals).Equals(0);
+        }
+
+
         private int GetColdMeal(DateTime limitHour, DateTime arrivalHour)
         {
-            if (arrivalHour.Day > limitHour.Day)
+            if (arrivalHour.Date > limitHour.Date)
                 return 0;
 
             if (arrivalHour < limitHour)
