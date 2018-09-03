@@ -1,9 +1,7 @@
 package fr.lacombe.magic6tem;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Conference {
 
@@ -26,6 +24,10 @@ public class Conference {
     }
 
     public int getColdMeals2() {
+        if (participant.isArrivalTimeAfter(LIMIT_HOUR)) {
+            return 1;
+        }
         return 0;
     }
+
 }
