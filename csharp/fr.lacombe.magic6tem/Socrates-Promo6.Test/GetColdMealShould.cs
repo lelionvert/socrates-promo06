@@ -50,12 +50,20 @@ namespace Socrates_Promo6.Test
 
         private int GetColdMeal(DateTime limitHour, DateTime arrivalHour)
         {
-            if (arrivalHour.Date > limitHour.Date)
-                return 0;
+            if (ArrivalDayIsEqualToCheckinDay(limitHour, arrivalHour))
+            {
+                if (arrivalHour < limitHour)
+                    return 0;
 
-            if (arrivalHour < limitHour)
-                return 0;
-            return 1;
+                return 1;
+            }
+
+            return 0;
+        }
+
+        private bool ArrivalDayIsEqualToCheckinDay(DateTime checkinDate, DateTime arrivalDate)
+        {
+            return checkinDate.Date.Equals(arrivalDate.Date);
         }
     }
 }
