@@ -22,8 +22,10 @@ namespace Socrates_Promo6
             return count;
         }
 
-        public int GetNumberOfCovers()
+        public int GetNumberOfCovers(Participant participant)
         {
+            if (participant != null)
+                return 1;
             return 0;
         }
     }

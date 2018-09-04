@@ -6,13 +6,21 @@ using Xunit;
 
 namespace Socrates_Promo6.Test
 {
-    public class RestaurantTest
+    public class GetNumberOfCoversShould
     {
         [Fact]
-      public void toto()
+      public void Return_zero_cover_for_zero_participant()
         {
-            int numberOfCovers = new Restaurant().GetNumberOfCovers();
+            int numberOfCovers = new Restaurant().GetNumberOfCovers(null);
             Check.That(numberOfCovers).Equals(0);
         }
+
+        [Fact]
+        public void Return_one_cover_for_one_participant()
+        {
+            int numberOfCovers = new Restaurant().GetNumberOfCovers(new Participant());
+            Check.That(numberOfCovers).Equals(1);
+        }
     }
+
 }
