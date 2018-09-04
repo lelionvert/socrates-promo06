@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,33 +61,33 @@ class GetColdMealShould {
 
 class GetCoversByDietShould {
     private static final Participant PARTICIPANT = new Participant(LocalTime.of(20, 0));
-    private ArrayList<Participant> participants = new ArrayList<>();
+    private List<Participant> participants = new ArrayList<>();
 
     @Test
     void return_zero_if_there_is_no_participant() {
         Conference conference = new Conference();
-        assertThat(conference.getCoversByDiet()).isEqualTo(0);
+        assertThat(conference.getCoversByDiet("O").size()).isEqualTo(0);
     }
 
     @Test
     void return_one_if_there_is_a_participant() {
         participants.add(PARTICIPANT);
         Conference conference = new Conference(participants);
-        assertThat(conference.getCoversByDiet()).isEqualTo(1);
+        assertThat(conference.getCoversByDiet("O").size()).isEqualTo(1);
     }
 
     @Test
     void return_zero_if_one_participant_but_no_meal() {
         participants.add(PARTICIPANT);
         Conference conference = new Conference(participants, 0);
-        assertThat(conference.getCoversByDiet()).isEqualTo(0);
+        assertThat(conference.getCoversByDiet("O").size()).isEqualTo(0);
     }
 
     @Test
     void return_two_if_one_participant_and_two_meal() {
         participants.add(PARTICIPANT);
         Conference conference = new Conference(participants, 2);
-        assertThat(conference.getCoversByDiet()).isEqualTo(2);
+        assertThat(conference.getCoversByDiet("O").size()).isEqualTo(2);
     }
 
     @Test
@@ -94,7 +95,21 @@ class GetCoversByDietShould {
         participants.add(PARTICIPANT);
         participants.add(PARTICIPANT);
         Conference conference = new Conference(participants, 6);
-        assertThat(conference.getCoversByDiet()).isEqualTo(12);
+        assertThat(conference.getCoversByDiet("O").size()).isEqualTo(12);
+    }
+
+    @Test
+    void return_six_omnivorous_cover_for_one_participant_and_six_meal() {
+        participants.add(PARTICIPANT);
+        List<String> coversList = new ArrayList<>();
+        coversList.add("Omnivorous");
+        coversList.add("Omnivorous");
+        coversList.add("Omnivorous");
+        coversList.add("Omnivorous");
+        coversList.add("Omnivorous");
+        coversList.add("Omnivorous");
+        Conference conference = new Conference(participants, 6);
+        assertThat(conference.getCoversByDiet("Omnivorous")).isEqualTo(coversList);
     }
 
 }
