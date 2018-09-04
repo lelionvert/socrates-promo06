@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Socrates_Promo6
 {
     public class Restaurant
     {
-        private int _mealNumber;
+        private readonly int _mealNumber;
 
         public Restaurant(int mealNumber)
         {
@@ -35,14 +36,22 @@ namespace Socrates_Promo6
             return count;
         }
 
-        public int GetNumberOfCovers(Participant participant)
+
+        public int GetNumberOfCovers(List<Participant> participants)
         {
-            if (participant != null)
+            if (participants == null)
             {
-                return _mealNumber;
+                return 0;
             }
-                
-            return 0;
+            int numberOfCovers = 0;
+            foreach (var participant in participants)
+            {
+                numberOfCovers += _mealNumber;
+            }
+
+           return participants.Count * _mealNumber;
+            return numberOfCovers;
+           
         }
     }
 }
