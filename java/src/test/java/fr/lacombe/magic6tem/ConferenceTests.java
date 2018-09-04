@@ -61,6 +61,7 @@ class GetColdMealShould {
 class GetCoversByDietShould {
     private static final Participant PARTICIPANT = new Participant(LocalTime.of(20, 0));
     private ArrayList<Participant> participants = new ArrayList<>();
+
     @Test
     void return_zero_if_there_is_no_participant() {
         Conference conference = new Conference();
@@ -73,6 +74,29 @@ class GetCoversByDietShould {
         Conference conference = new Conference(participants);
         assertThat(conference.getCoversByDiet()).isEqualTo(1);
     }
+
+    @Test
+    void return_zero_if_one_participant_but_no_meal() {
+        participants.add(PARTICIPANT);
+        Conference conference = new Conference(participants, 0);
+        assertThat(conference.getCoversByDiet()).isEqualTo(0);
+    }
+
+    @Test
+    void return_two_if_one_participant_and_two_meal() {
+        participants.add(PARTICIPANT);
+        Conference conference = new Conference(participants, 2);
+        assertThat(conference.getCoversByDiet()).isEqualTo(2);
+    }
+
+    @Test
+    void return_twelve_if_two_participant_and_six_meal() {
+        participants.add(PARTICIPANT);
+        participants.add(PARTICIPANT);
+        Conference conference = new Conference(participants, 6);
+        assertThat(conference.getCoversByDiet()).isEqualTo(12);
+    }
+
 }
 
 

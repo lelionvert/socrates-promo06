@@ -7,6 +7,7 @@ import java.util.List;
 public class Conference {
 
     private static final LocalTime LIMIT_HOUR = LocalTime.of(21, 0);
+    private int meals = 1;
     private List<Participant> participants;
 
     public Conference(List<Participant> participants) {
@@ -15,6 +16,11 @@ public class Conference {
 
     public Conference() {
         participants = new ArrayList<>();
+    }
+
+    public Conference(ArrayList<Participant> participants, int meals) {
+        this.participants = participants;
+        this.meals = meals;
     }
 
     public int getColdMeals() {
@@ -26,6 +32,6 @@ public class Conference {
         if (participants.isEmpty()) {
             return 0;
         }
-        return 1;
+        return meals * participants.size();
     }
 }
