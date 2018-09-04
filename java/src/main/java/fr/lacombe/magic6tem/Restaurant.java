@@ -15,7 +15,9 @@ public class Restaurant {
         return participant.size();
     }
 
-
+    public static int getCountOfCovers(List<Participant> participants, int numberOfMeal) {
+        return 0;
+    }
 
     public int getCountOfColdMeal() {
         return (int) checkIns.stream()

@@ -36,6 +36,13 @@ class DietTest {
             assertThat(Restaurant.getCountOfCovers(participants)).isEqualTo(2);
         }
 
+        @Test
+        void return_0_given_1_participants_and_0_meal() {
+            List<Participant> participants = new ArrayList<>();
+            participants.add(new Participant());
+            assertThat(Restaurant.getCountOfCovers(participants, 0)).isEqualTo(0);
+        }
+
 
     }
 
