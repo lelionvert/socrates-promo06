@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +95,38 @@ class CoverTest {
             assertThat(covers.countOf(Diet.VEGETARIAN)).isEqualTo(18);
             assertThat(covers.countOf(Diet.PESCARIAN)).isEqualTo(24);
         }
-    }
 
+        @Test
+        void return_five_covers_for_participant_who_is_late_for_6_meals() {
+
+            List<Participant> participants = new ArrayList<>();
+            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018,10,25,21,1));
+            Participant lateOmnivoreParticipant = new Participant(Diet.OMNIVORE, checkIn);
+            participants.add(lateOmnivoreParticipant);
+
+
+            Integer countOfCover = RESTAURANT.coversFor(participants, 6).countOf(Diet.OMNIVORE);
+
+            assertThat(countOfCover).isEqualTo(5);
+        }
+
+        @Test
+        void return_five_covers_for_participants_which_one_is_late_and_omni_other_vegan_and_on_time_for_6_meals() {
+
+            List<Participant> participants = new ArrayList<>();
+            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018,10,25,21,1));
+            Participant lateOmnivoreParticipant = new Participant(Diet.OMNIVORE, checkIn);
+            Participant veganParticipant = new Participant(Diet.VEGAN);
+            participants.add(lateOmnivoreParticipant);
+            participants.add(veganParticipant);
+
+
+            Integer countOfCoverOmnivore = RESTAURANT.coversFor(participants, 6).countOf(Diet.OMNIVORE);
+            Integer countOfCoverVegan = RESTAURANT.coversFor(participants, 6).countOf(Diet.VEGAN);
+
+            assertThat(countOfCoverOmnivore).isEqualTo(5);
+            assertThat(countOfCoverVegan).isEqualTo(6);
+        }
+    }
 
 }
