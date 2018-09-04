@@ -58,4 +58,21 @@ class GetColdMealShould {
 
 }
 
+class GetCoversByDietShould {
+    private static final Participant PARTICIPANT = new Participant(LocalTime.of(20, 0));
+    private ArrayList<Participant> participants = new ArrayList<>();
+    @Test
+    void return_zero_if_there_is_no_participant() {
+        Conference conference = new Conference();
+        assertThat(conference.getCoversByDiet()).isEqualTo(0);
+    }
+
+    @Test
+    void return_one_if_there_is_a_participant() {
+        participants.add(PARTICIPANT);
+        Conference conference = new Conference(participants);
+        assertThat(conference.getCoversByDiet()).isEqualTo(1);
+    }
+}
+
 
