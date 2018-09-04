@@ -21,6 +21,12 @@ namespace Socrates_Promo6.Test
             int numberOfCovers = new Restaurant().GetNumberOfCovers(new Participant());
             Check.That(numberOfCovers).Equals(1);
         }
+        [Fact]
+        public void Return_zero_covers_when_zero_meal()
+        {
+            int numberOfCovers = new Restaurant(0).GetNumberOfCovers(new Participant());
+            Check.That(numberOfCovers).Equals(0);
+        }
     }
 
 }

@@ -6,6 +6,19 @@ namespace Socrates_Promo6
 {
     public class Restaurant
     {
+        private int _mealNumber;
+
+        public Restaurant(int mealNumber)
+        {
+            _mealNumber = mealNumber;
+        }
+
+        public Restaurant() : this(1)
+        {
+          
+        }
+
+
         public static int GetColdMeals(List<CheckIn> checkIns, DinerTime dinerTime)
         {
             int count = 0;
@@ -25,7 +38,10 @@ namespace Socrates_Promo6
         public int GetNumberOfCovers(Participant participant)
         {
             if (participant != null)
-                return 1;
+            {
+                return _mealNumber;
+            }
+                
             return 0;
         }
     }
