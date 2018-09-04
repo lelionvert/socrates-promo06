@@ -21,5 +21,10 @@ namespace Socrates_Promo6
             }
             return count;
         }
+
+        public int GetNumberOfCovers()
+        {
+            return 0;
+        }
     }
 }
