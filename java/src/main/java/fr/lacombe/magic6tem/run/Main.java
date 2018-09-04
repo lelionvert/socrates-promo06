@@ -1,4 +1,4 @@
-package fr.lacombe.magic6tem.fonctionaltest;
+package fr.lacombe.magic6tem.run;
 
 import fr.lacombe.magic6tem.Conference;
 import fr.lacombe.magic6tem.Participant;
