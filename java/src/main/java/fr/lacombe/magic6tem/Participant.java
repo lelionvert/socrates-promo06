@@ -1,5 +1,7 @@
 package fr.lacombe.magic6tem;
 
+import fr.lacombe.magic6tem.restaurant.Diet;
+
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -8,7 +10,7 @@ public class Participant {
     private LocalTime arrivalTime;
     private final Diet diet;
 
-    Participant(LocalTime arrivalTime) {
+    public Participant(LocalTime arrivalTime) {
         this(arrivalTime,Diet.OMNIVOROUS);
     }
 
@@ -21,7 +23,7 @@ public class Participant {
         return new Participant(LocalTime.of(hours,minutes));
     }
 
-    boolean isArrivalTimeAfter(LocalTime limitHour) {
+    public boolean isArrivalTimeAfter(LocalTime limitHour) {
         return arrivalTime.isAfter(limitHour);
     }
 

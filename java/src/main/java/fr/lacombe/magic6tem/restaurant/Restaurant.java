@@ -1,26 +1,26 @@
-package fr.lacombe.magic6tem;
+package fr.lacombe.magic6tem.restaurant;
+
+import fr.lacombe.magic6tem.Participant;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-public class Conference {
+public class Restaurant {
 
     private static final LocalTime LIMIT_HOUR = LocalTime.of(21, 0);
     private int meals = 1;
     private List<Participant> participants;
 
-    public Conference(List<Participant> participants) {
+    public Restaurant(List<Participant> participants) {
         this.participants = participants;
     }
 
-    public Conference() {
+    public Restaurant() {
         participants = new ArrayList<>();
     }
 
-    public Conference(List<Participant> participants, int meals) {
+    public Restaurant(List<Participant> participants, int meals) {
         this.participants = participants;
         this.meals = meals;
     }

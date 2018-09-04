@@ -1,7 +1,7 @@
 package fr.lacombe.magic6tem.run;
 
-import fr.lacombe.magic6tem.Conference;
 import fr.lacombe.magic6tem.Participant;
+import fr.lacombe.magic6tem.restaurant.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Main {
                     System.out.println("Please enter a valid minute !");
                 }
             }
-            System.out.println("New participant added to the conference coming at : " + hours + "h" + minutes);
+            System.out.println("New participant added to the restaurant coming at : " + hours + "h" + minutes);
             participantList.add(Participant.ofArrivalTime(hours, minutes));
             System.out.println("Do you want to stop the input of the participants ? (true or false)");
             boolean breakBoucle = consoleInput.nextBoolean();
@@ -44,8 +44,8 @@ public class Main {
             }
 
         }
-        Conference conference = new Conference(participantList);
-        System.out.println("You will need "+conference.getColdMeals()+" cold meals to be prepared.");
-        System.out.println("Go conference yourself");
+        Restaurant restaurant = new Restaurant(participantList);
+        System.out.println("You will need " + restaurant.getColdMeals() + " cold meals to be prepared.");
+        System.out.println("Go restaurant yourself");
     }
 }
