@@ -18,14 +18,14 @@ class DietTest {
         @Test
         public void return_0_when_given_no_participant(){
             List<Participant> participants = new ArrayList<>();
-            assertThat(Restaurant.getCountOfCovers(participants)).isEqualTo(0);
+            assertThat(Restaurant.getCountOfCovers(participants, 1)).isEqualTo(0);
         }
 
         @Test
         void return_1_given_one_participant() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant());
-            assertThat(Restaurant.getCountOfCovers(participants)).isEqualTo(1);
+            assertThat(Restaurant.getCountOfCovers(participants, 1)).isEqualTo(1);
         }
 
         @Test
@@ -33,7 +33,7 @@ class DietTest {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant());
             participants.add(new Participant());
-            assertThat(Restaurant.getCountOfCovers(participants)).isEqualTo(2);
+            assertThat(Restaurant.getCountOfCovers(participants, 1)).isEqualTo(2);
         }
 
         @Test
@@ -41,6 +41,20 @@ class DietTest {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant());
             assertThat(Restaurant.getCountOfCovers(participants, 0)).isEqualTo(0);
+        }
+
+        @Test
+        void return_1_given_one_participant_and_1_meal() {
+            List<Participant> participants = new ArrayList<>();
+            participants.add(new Participant());
+            assertThat(Restaurant.getCountOfCovers(participants,1)).isEqualTo(1);
+        }
+
+        @Test
+        void return_6_given_one_participant_and_6_meals() {
+            List<Participant> participants = new ArrayList<>();
+            participants.add(new Participant());
+            assertThat(Restaurant.getCountOfCovers(participants,6)).isEqualTo(6);
         }
 
 
