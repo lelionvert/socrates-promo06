@@ -24,9 +24,9 @@ class Runner {
                 more = scanner.nextLine().equals("Y");
             }
         }
-        Meal meal = new Meal(checkIns);
+        Restaurant meal = new Restaurant(checkIns);
         checkIns.forEach(System.out::println);
-        System.out.println("Number of Cold Meal : " + meal.getCountOfColdMeal());
+        System.out.println("Number of Cold Restaurant : " + meal.getCountOfColdMeal());
     }
 
 }
