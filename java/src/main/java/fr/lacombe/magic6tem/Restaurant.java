@@ -11,9 +11,11 @@ public class Restaurant {
         this.checkIns = checkIns;
     }
 
-    public static int getCountOfCovers() {
-        return 0;
+    public static int getCountOfCovers(List<Participant> participant) {
+        return participant.size();
     }
+
+
 
     public int getCountOfColdMeal() {
         return (int) checkIns.stream()
