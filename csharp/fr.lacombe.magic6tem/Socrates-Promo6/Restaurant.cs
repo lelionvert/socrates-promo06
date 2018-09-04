@@ -16,7 +16,7 @@ namespace Socrates_Promo6
 
         public Restaurant() : this(1)
         {
-          
+
         }
 
 
@@ -37,21 +37,26 @@ namespace Socrates_Promo6
         }
 
 
-        public int GetNumberOfCovers(List<Participant> participants)
+        public Dictionary<string, int> GetNumberOfCoversDiet(List<Participant> participants)
         {
-            if (participants == null)
+
+            Dictionary<string, int> coversNumberWithDiet = new Dictionary<string, int>
             {
-                return 0;
-            }
-            int numberOfCovers = 0;
+                {Diet.VEGETARIAN,0},{Diet.VEGAN,0},{Diet.PESCATARIAN,0},{Diet.OMNIVOROUS,0}
+            };
+            if (participants == null)
+                return coversNumberWithDiet;
             foreach (var participant in participants)
             {
-                numberOfCovers += _mealNumber;
+                if (coversNumberWithDiet.ContainsKey(participant.GetDiet()))
+                {
+                    coversNumberWithDiet[participant.GetDiet()] += _mealNumber;
+                }
+
             }
 
-           return participants.Count * _mealNumber;
-            return numberOfCovers;
-           
+            return coversNumberWithDiet;
         }
     }
 }
+
