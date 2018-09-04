@@ -3,6 +3,7 @@ package fr.lacombe.magic6tem;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Conference {
@@ -26,17 +27,23 @@ public class Conference {
 
     public int getColdMeals() {
         return ((int) this.participants.stream()
-                .filter(participant1 -> participant1.isArrivalTimeAfter(LIMIT_HOUR)).count());
+                .filter(this::isGoingToBeLateForFirstDinner).count());
     }
 
-    public List<String> getCoversByDiet(String diet) {
+    private boolean isGoingToBeLateForFirstDinner(Participant participant) {
+        return participant.isArrivalTimeAfter(LIMIT_HOUR);
+    }
+
+    public List<Diet> getCoversByDiet() {
         if (participants.isEmpty()) {
             return new ArrayList<>();
         }
 
-        List<String> coversList = new ArrayList<>();
-        for(int i=0; i<meals * participants.size(); i++) {
-            coversList.add(diet);
+        List<Diet> coversList = new ArrayList<>();
+        for (Participant participant : participants) {
+            for (int i = 0; i < meals; i++) {
+                coversList.add(participant.getDiet());
+            }
         }
 
         return coversList;

@@ -6,9 +6,15 @@ import java.util.Objects;
 public class Participant {
 
     private LocalTime arrivalTime;
+    private final Diet diet;
 
     Participant(LocalTime arrivalTime) {
+        this(arrivalTime,Diet.OMNIVOROUS);
+    }
+
+    public Participant(LocalTime arrivalTime, Diet diet) {
         this.arrivalTime = arrivalTime;
+        this.diet = diet;
     }
 
     public static Participant ofArrivalTime(int hours, int minutes) {
@@ -38,5 +44,9 @@ public class Participant {
     public int hashCode() {
 
         return Objects.hash(arrivalTime);
+    }
+
+    public Diet getDiet() {
+        return diet;
     }
 }
