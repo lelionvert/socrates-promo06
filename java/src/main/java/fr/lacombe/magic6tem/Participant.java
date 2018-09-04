@@ -1,6 +1,6 @@
 package fr.lacombe.magic6tem;
 
-class Participant {
+public class Participant {
 
     private Diet diet;
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MealTest {
+class RestaurantTest {
 
     @Nested
     @DisplayName("Cold Restaurant Feature Should ")

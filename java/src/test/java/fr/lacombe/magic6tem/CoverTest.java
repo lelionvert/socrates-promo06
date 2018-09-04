@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DietTest {
+class CoverTest {
 
     public static final Participant OMNIVORE_PARTICIPANT = new Participant(Diet.OMNIVORE);
+    public static final Participant VEGAN_PARTICIPANT = new Participant(Diet.VEGAN);
+    public static final Restaurant RESTAURANT = new Restaurant();
 
     @Nested
     @DisplayName("Get count of covers should")
@@ -22,14 +22,14 @@ class DietTest {
         @Test
         public void return_0_when_given_no_participant(){
             List<Participant> participants = new ArrayList<>();
-            assertThat(Restaurant.getCountOfCovers(participants, 1)).isEqualTo(0);
+            assertThat(((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE))).isEqualTo(0);
         }
 
         @Test
         void return_1_given_one_participant() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat(Restaurant.getCountOfCovers(participants, 1)).isEqualTo(1);
+            assertThat((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE)).isEqualTo(1);
         }
 
         @Test
@@ -37,41 +37,40 @@ class DietTest {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat(Restaurant.getCountOfCovers(participants, 1)).isEqualTo(2);
+            assertThat((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE)).isEqualTo(2);
         }
 
         @Test
         void return_0_given_1_participants_and_0_meal() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat(Restaurant.getCountOfCovers(participants, 0)).isEqualTo(0);
+            assertThat((int) new Restaurant().coversFor(participants, 0).countOf(Diet.OMNIVORE)).isEqualTo(0);
         }
 
         @Test
         void return_1_given_one_participant_and_1_meal() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat(Restaurant.getCountOfCovers(participants,1)).isEqualTo(1);
+            assertThat((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE)).isEqualTo(1);
         }
 
         @Test
         void return_6_given_one_participant_and_6_meals() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat(Restaurant.getCountOfCovers(participants,6)).isEqualTo(6);
+            assertThat((int) RESTAURANT.coversFor(participants, 6).countOf(Diet.OMNIVORE)).isEqualTo(6);
         }
 
         @Test
         void return_covers_by_diet_for_vegan_and_omnivore() {
             List<Participant> participants = new ArrayList<>();
             participants.add(OMNIVORE_PARTICIPANT);
-            participants.add(new Participant(Diet.VEGAN));
+            participants.add(VEGAN_PARTICIPANT);
 
-            Map<Diet,Integer> covers = new HashMap<>();
-            covers.put(Diet.OMNIVORE,6);
-            covers.put(Diet.VEGAN,6);
+            Covers covers = new Restaurant().coversFor(participants, 6);
 
-            assertThat(Restaurant.getCountOfCoversBis(participants, 6)).isEqualTo(covers);
+            assertThat(covers.countOf(Diet.OMNIVORE)).isEqualTo(6);
+            assertThat(covers.countOf(Diet.VEGAN)).isEqualTo(6);
         }
 
         @Test
@@ -88,13 +87,12 @@ class DietTest {
             participants.add(new Participant(Diet.PESCARIAN));
             participants.add(new Participant(Diet.PESCARIAN));
 
-            Map<Diet,Integer> covers = new HashMap<>();
-            covers.put(Diet.OMNIVORE,6);
-            covers.put(Diet.VEGAN,12);
-            covers.put(Diet.VEGETARIAN,18);
-            covers.put(Diet.PESCARIAN,24);
+            Covers covers = new Restaurant().coversFor(participants, 6);
 
-            assertThat(Restaurant.getCountOfCoversBis(participants, 6)).isEqualTo(covers);
+            assertThat(covers.countOf(Diet.OMNIVORE)).isEqualTo(6);
+            assertThat(covers.countOf(Diet.VEGAN)).isEqualTo(12);
+            assertThat(covers.countOf(Diet.VEGETARIAN)).isEqualTo(18);
+            assertThat(covers.countOf(Diet.PESCARIAN)).isEqualTo(24);
         }
     }
 
