@@ -1,6 +1,6 @@
 package fr.lacombe.magic6tem.run;
 
-import fr.lacombe.magic6tem.Participant;
+import fr.lacombe.magic6tem.conference.Participant;
 import fr.lacombe.magic6tem.restaurant.Restaurant;
 
 import java.util.ArrayList;

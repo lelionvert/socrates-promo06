@@ -1,5 +1,6 @@
 package fr.lacombe.magic6tem;
 
+import fr.lacombe.magic6tem.conference.Participant;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;

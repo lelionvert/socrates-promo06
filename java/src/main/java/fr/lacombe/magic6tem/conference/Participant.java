@@ -1,4 +1,4 @@
-package fr.lacombe.magic6tem;
+package fr.lacombe.magic6tem.conference;
 
 import fr.lacombe.magic6tem.restaurant.Diet;
 
@@ -28,13 +28,6 @@ public class Participant {
     }
 
     @Override
-    public String toString() {
-        return "Participant{" +
-                "arrivalTime=" + arrivalTime +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -50,5 +43,9 @@ public class Participant {
 
     public Diet getDiet() {
         return diet;
+    }
+
+    public boolean isArrivalTimeBefore(LocalTime limitHour) {
+        return arrivalTime.isBefore(limitHour);
     }
 }

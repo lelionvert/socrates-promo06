@@ -1,17 +1,12 @@
 package fr.lacombe.magic6tem.restaurant;
 
-import fr.lacombe.magic6tem.Participant;
+import fr.lacombe.magic6tem.conference.Participant;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static fr.lacombe.magic6tem.restaurant.Diet.OMNIVOROUS;
-import static fr.lacombe.magic6tem.restaurant.Diet.VEGETARIAN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GetColdMealShould {
@@ -67,71 +62,125 @@ class GetColdMealShould {
 
 class GetCoversByDietShould {
     private static final Participant PARTICIPANT_OMNIVOROUS = new Participant(LocalTime.of(20, 0));
-    public static final Participant PARTICIPANT_VEGETARIAN = new Participant(LocalTime.of(20, 0), Diet.VEGETARIAN);
+    private static final Participant PARTICIPANT_VEGETARIAN = new Participant(LocalTime.of(20, 0), Diet.VEGETARIAN);
+    private static final Participant LATE_PARTICIPANT = new Participant(LocalTime.of(22, 0));
 
     private List<Participant> participants = new ArrayList<>();
-    public static final List<Diet> SIX_OMNIVOROUS_COVERS = Arrays.asList(OMNIVOROUS, OMNIVOROUS, OMNIVOROUS, OMNIVOROUS, OMNIVOROUS, OMNIVOROUS);
-    public static final List<Diet> SIX_VEGETARIAN_COVERS = Arrays.asList(VEGETARIAN, VEGETARIAN, VEGETARIAN, VEGETARIAN, VEGETARIAN, VEGETARIAN);
-    public static final List<Diet> SIX_VEGETARIAN_COVERS_AND_SIX_OMNIVOROUS_COVERS = Stream.concat(SIX_VEGETARIAN_COVERS.stream(),
-            SIX_OMNIVOROUS_COVERS.stream())
-            .collect(Collectors.toList());
-
-    @Test
-    void return_zero_if_there_is_no_participant() {
-        Restaurant restaurant = new Restaurant();
-        assertThat(restaurant.getCoversByDiet().size()).isEqualTo(0);
-    }
 
     @Test
     void return_one_if_there_is_a_participant() {
         participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(1));
         Restaurant restaurant = new Restaurant(participants);
-        assertThat(restaurant.getCoversByDiet().size()).isEqualTo(1);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
     }
 
     @Test
     void return_zero_if_one_participant_but_no_meal() {
         participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
         Restaurant restaurant = new Restaurant(participants, 0);
-        assertThat(restaurant.getCoversByDiet().size()).isEqualTo(0);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
     }
 
     @Test
-    void return_two_if_one_participant_and_two_meal() {
-        participants.add(PARTICIPANT_OMNIVOROUS);
-        Restaurant restaurant = new Restaurant(participants, 2);
-        assertThat(restaurant.getCoversByDiet().size()).isEqualTo(2);
-    }
-
-    @Test
-    void return_twelve_if_two_participant_and_six_meal() {
+    void return_twelve_if_two_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
         participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
         Restaurant restaurant = new Restaurant(participants, 6);
-        assertThat(restaurant.getCoversByDiet().size()).isEqualTo(12);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
     }
 
     @Test
-    void return_six_omnivorous_cover_for_one_participant_and_six_meal() {
+    void return_six_omnivorous_cover_for_one_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
         Restaurant restaurant = new Restaurant(participants, 6);
-        assertThat(restaurant.getCoversByDiet()).isEqualTo(SIX_OMNIVOROUS_COVERS);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
     }
 
     @Test
-    void return_six_vegetarian_covers_for_one_participant_and_six_meals() {
+    void return_six_vegetarian_covers_for_one_vegetarian_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(0, 1));
+        covers.add(new Covers(0, 1));
+        covers.add(new Covers(0, 1));
+        covers.add(new Covers(0, 1));
+        covers.add(new Covers(0, 1));
+        covers.add(new Covers(0, 1));
         Restaurant restaurant = new Restaurant(participants, 6);
-        assertThat(restaurant.getCoversByDiet()).isEqualTo(SIX_VEGETARIAN_COVERS);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
     }
 
     @Test
     void return_six_vegetarian_covers_and_six_omnivorous_for_two_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
         participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(1, 1));
+        covers.add(new Covers(1, 1));
+        covers.add(new Covers(1, 1));
+        covers.add(new Covers(1, 1));
+        covers.add(new Covers(1, 1));
+        covers.add(new Covers(1, 1));
         Restaurant restaurant = new Restaurant(participants, 6);
-        assertThat(restaurant.getCoversByDiet())
-                .isEqualTo(SIX_VEGETARIAN_COVERS_AND_SIX_OMNIVOROUS_COVERS);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
+    }
+
+    @Test
+    void return_five_omnivorous_cover_for_one_late_participant_for_6_meals() {
+        participants.add(LATE_PARTICIPANT);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(0));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        covers.add(new Covers(1));
+        Restaurant restaurant = new Restaurant(participants, 6);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
+    }
+
+    @Test
+    void return_eleven_omnivorous_cover_for_one_late_participant_and_another_on_time_for_6_meals() {
+        participants.add(LATE_PARTICIPANT);
+        participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(1));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        covers.add(new Covers(2));
+        Restaurant restaurant = new Restaurant(participants, 6);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
+    }
+
+    @Test
+    void toto() {
+        participants.add(LATE_PARTICIPANT);
+        participants.add(LATE_PARTICIPANT);
+        participants.add(PARTICIPANT_OMNIVOROUS);
+        List<Covers> covers = new ArrayList<>();
+        covers.add(new Covers(1));
+        covers.add(new Covers(3));
+        Restaurant restaurant = new Restaurant(participants, 2);
+        assertThat(restaurant.getCoversByDiet2()).isEqualTo(covers);
     }
 }
 
