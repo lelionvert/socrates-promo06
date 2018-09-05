@@ -2,31 +2,34 @@ package fr.lacombe.magic6tem.restaurant;
 
 import fr.lacombe.magic6tem.conference.Participant;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Meal {
 
-    private int vegetarians = 0;
-    private int vegans = 0;
-    private int pescatarians = 0;
-    private int omnivorous = 0;
+    private final Map<Diet, Long> coversByDiet;
 
-    private Meal() {
+    private Meal(Map<Diet, Long> coversByDiet){
+
+        this.coversByDiet = coversByDiet;
     }
 
     public static Meal from(List<Participant> participants) {
-        Meal meal = new Meal();
-        meal.vegetarians = getCountForDiet(participants, Diet.VEGETARIAN);
-        meal.vegans = getCountForDiet(participants, Diet.VEGAN);
-        meal.pescatarians = getCountForDiet(participants, Diet.PESCATARIAN);
-        meal.omnivorous = getCountForDiet(participants, Diet.OMNIVOROUS);
-        return meal;
+        Map<Diet, Long> coversByDiet;
+
+        coversByDiet = participants.stream()
+            .map(Participant::getDiet)
+            .collect(Collectors.groupingBy(diet -> diet, Collectors.counting()));
+        Stream.of(Diet.values()).forEach(diet -> coversByDiet.computeIfAbsent(diet,c -> 0L));
+        return new Meal(coversByDiet);
     }
 
-    private static int getCountForDiet(List<Participant> participants, Diet searchedDiet) {
-        return (int) participants.stream().map(Participant::getDiet)
-                .filter(diet -> diet.equals(searchedDiet)).count();
+    public static Builder aMeal() {
+        return new Builder();
     }
 
     @Override
@@ -34,66 +37,60 @@ public class Meal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Meal meal = (Meal) o;
-        return vegetarians == meal.vegetarians &&
-                vegans == meal.vegans &&
-                pescatarians == meal.pescatarians &&
-                omnivorous == meal.omnivorous;
+        return Objects.equals(coversByDiet, meal.coversByDiet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vegetarians, vegans, pescatarians, omnivorous);
+
+        return Objects.hash(coversByDiet);
     }
 
     @Override
     public String toString() {
-        return "Meal\n" +
-            "omnivorous :\t" + omnivorous +
-            "\nvegetarians :\t" + vegetarians +
-            "\nvegans :\t\t" + vegans +
-            "\npescatarians :\t" + pescatarians;
+        return "Meal{" +
+            "coversByDiet=" + coversByDiet +
+            '}';
     }
 
-    public static final class MealBuilder {
-        private int vegetarians = 0;
-        private int vegans = 0;
-        private int pescatarians = 0;
-        private int omnivorous = 0;
+    public static final class Builder {
+        private long vegetarians = 0;
+        private long vegans = 0;
+        private long pescatarians = 0;
 
-        private MealBuilder() {
+        private long omnivorous = 0;
+
+        private Builder() {
         }
 
-        public static MealBuilder aMeal() {
-            return new MealBuilder();
-        }
-
-        public MealBuilder withVegetarians(int vegetarians) {
+        public Builder withVegetarians(long vegetarians) {
             this.vegetarians = vegetarians;
             return this;
         }
 
-        public MealBuilder withVegans(int vegans) {
+        public Builder withVegans(long vegans) {
             this.vegans = vegans;
             return this;
         }
 
-        public MealBuilder withPescatarians(int pescatarians) {
+        public Builder withPescatarians(long pescatarians) {
             this.pescatarians = pescatarians;
             return this;
         }
 
-        public MealBuilder withOmnivorous(int omnivorous) {
+        public Builder withOmnivorous(long omnivorous) {
             this.omnivorous = omnivorous;
             return this;
         }
 
         public Meal build() {
-            Meal meal = new Meal();
-            meal.vegans = this.vegans;
-            meal.omnivorous = this.omnivorous;
-            meal.vegetarians = this.vegetarians;
-            meal.pescatarians = this.pescatarians;
-            return meal;
+
+            Map<Diet, Long> coversByDiet = new HashMap<>();
+            coversByDiet.put(Diet.VEGAN, this.vegans);
+            coversByDiet.put(Diet.OMNIVOROUS, this.omnivorous);
+            coversByDiet.put(Diet.PESCATARIAN, this.pescatarians);
+            coversByDiet.put(Diet.VEGETARIAN, this.vegetarians);
+            return new Meal(coversByDiet);
         }
     }
 }

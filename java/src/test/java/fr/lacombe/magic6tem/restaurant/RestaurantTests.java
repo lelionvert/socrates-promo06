@@ -74,7 +74,7 @@ class GetMealByDietShould {
     void return_one_if_there_is_a_participant() {
         participants.add(PARTICIPANT_OMNIVOROUS);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
         Restaurant restaurant = new Restaurant(participants);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -92,12 +92,12 @@ class GetMealByDietShould {
         participants.add(PARTICIPANT_OMNIVOROUS);
         participants.add(PARTICIPANT_OMNIVOROUS);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
         Restaurant restaurant = new Restaurant(participants, 6);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -106,12 +106,12 @@ class GetMealByDietShould {
     void return_six_omnivorous_covers_for_one_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
         Restaurant restaurant = new Restaurant(participants, 6);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -120,12 +120,12 @@ class GetMealByDietShould {
     void return_six_vegetarian_covers_for_one_vegetarian_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withVegetarians(1).build());
+        meals.add(Meal.aMeal().withVegetarians(1).build());
+        meals.add(Meal.aMeal().withVegetarians(1).build());
+        meals.add(Meal.aMeal().withVegetarians(1).build());
+        meals.add(Meal.aMeal().withVegetarians(1).build());
+        meals.add(Meal.aMeal().withVegetarians(1).build());
+        meals.add(Meal.aMeal().withVegetarians(1).build());
         Restaurant restaurant = new Restaurant(participants, 6);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -135,12 +135,12 @@ class GetMealByDietShould {
         participants.add(PARTICIPANT_VEGETARIAN);
         participants.add(PARTICIPANT_OMNIVOROUS);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).withVegetarians(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).withVegetarians(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).withVegetarians(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).withVegetarians(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).withVegetarians(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).withVegetarians(1).build());
         Restaurant restaurant = new Restaurant(participants, 6);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -149,12 +149,12 @@ class GetMealByDietShould {
     void return_five_omnivorous_cover_for_one_late_participant_for_6_meals() {
         participants.add(LATE_PARTICIPANT);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
         Restaurant restaurant = new Restaurant(participants, 6);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -164,12 +164,12 @@ class GetMealByDietShould {
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
+        meals.add(Meal.aMeal().withOmnivorous(2).build());
         Restaurant restaurant = new Restaurant(participants, 6);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -180,8 +180,8 @@ class GetMealByDietShould {
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
         List<Meal> meals = new ArrayList<>();
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(1).build());
-        meals.add(Meal.MealBuilder.aMeal().withOmnivorous(3).build());
+        meals.add(Meal.aMeal().withOmnivorous(1).build());
+        meals.add(Meal.aMeal().withOmnivorous(3).build());
         Restaurant restaurant = new Restaurant(participants, 2);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -200,7 +200,7 @@ class GetMealByDietShould {
 
         List<Meal> meals = new ArrayList<>();
 
-        Meal firstMeal = Meal.MealBuilder.aMeal()
+        Meal firstMeal = Meal.aMeal()
             .withOmnivorous(1)
             .withVegetarians(1)
             .withVegans(1)
@@ -209,7 +209,7 @@ class GetMealByDietShould {
 
         meals.add(firstMeal);
 
-        Meal secondMeal = Meal.MealBuilder.aMeal()
+        Meal secondMeal = Meal.aMeal()
             .withOmnivorous(2)
             .withVegetarians(2)
             .withVegans(1)
@@ -218,7 +218,7 @@ class GetMealByDietShould {
 
         meals.add(secondMeal);
 
-        Meal thirdMeal = Meal.MealBuilder.aMeal()
+        Meal thirdMeal = Meal.aMeal()
                                 .withOmnivorous(2)
                                 .withVegetarians(2)
                                 .withVegans(1)
