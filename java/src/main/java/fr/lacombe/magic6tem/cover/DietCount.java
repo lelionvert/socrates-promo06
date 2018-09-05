@@ -1,4 +1,4 @@
-package fr.lacombe.magic6tem;
+package fr.lacombe.magic6tem.cover;
 
 import java.util.Objects;
 
@@ -12,6 +12,14 @@ class DietCount {
         this.count = count;
     }
 
+    public Diet getDiet() {
+        return diet;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -20,6 +28,8 @@ class DietCount {
         return count == dietCount.count &&
                 diet == dietCount.diet;
     }
+
+
 
     @Override
     public int hashCode() {

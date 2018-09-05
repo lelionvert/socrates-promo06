@@ -1,5 +1,6 @@
-package fr.lacombe.magic6tem;
+package fr.lacombe.magic6tem.cover;
 
+import fr.lacombe.magic6tem.CheckIn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ class CoverTest {
 
     public static final Participant OMNIVORE_PARTICIPANT = new Participant(Diet.OMNIVORE);
     public static final Participant VEGAN_PARTICIPANT = new Participant(Diet.VEGAN);
-    public static final Restaurant RESTAURANT = new Restaurant();
 
     @Nested
     @DisplayName("Get count of covers should")
@@ -22,14 +22,14 @@ class CoverTest {
         @Test
         public void return_0_when_given_no_participant() {
             List<Participant> participants = new ArrayList<>();
-            assertThat(((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE))).isEqualTo(0);
+            assertThat(((int) getActual(participants, 1, Diet.OMNIVORE))).isEqualTo(0);
         }
 
         @Test
         void return_1_given_one_participant() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE)).isEqualTo(1);
+            assertThat((int) getActual(participants, 1, Diet.OMNIVORE)).isEqualTo(1);
         }
 
         @Test
@@ -37,28 +37,30 @@ class CoverTest {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE)).isEqualTo(2);
+            assertThat((int) getActual(participants, 1, Diet.OMNIVORE)).isEqualTo(2);
         }
 
         @Test
         void return_0_given_1_participants_and_0_meal() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat((int) new Restaurant().coversFor(participants, 0).countOf(Diet.OMNIVORE)).isEqualTo(0);
+            assertThat((int) getActual(participants, 0, Diet.OMNIVORE)).isEqualTo(0);
         }
 
         @Test
         void return_1_given_one_participant_and_1_meal() {
             List<Participant> participants = new ArrayList<>();
             participants.add(new Participant(Diet.OMNIVORE));
-            assertThat((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE)).isEqualTo(1);
+            assertThat((int) getActual(participants, 1, Diet.OMNIVORE)).isEqualTo(1);
         }
 
         @Test
         void return_6_given_one_participant_and_6_meals() {
             List<Participant> participants = new ArrayList<>();
-            participants.add(new Participant(Diet.OMNIVORE));
-            assertThat((int) RESTAURANT.coversFor(participants, 6).countOf(Diet.OMNIVORE)).isEqualTo(6);
+            Diet omnivore = Diet.OMNIVORE;
+            participants.add(new Participant(omnivore));
+            int numberOfMeal = 6;
+            assertThat((int) getActual(participants, numberOfMeal, omnivore)).isEqualTo(numberOfMeal);
         }
 
         @Test
@@ -67,10 +69,10 @@ class CoverTest {
             participants.add(OMNIVORE_PARTICIPANT);
             participants.add(VEGAN_PARTICIPANT);
 
-            Covers covers = new Restaurant().coversFor(participants, 6);
-
-            assertThat(covers.countOf(Diet.OMNIVORE)).isEqualTo(6);
-            assertThat(covers.countOf(Diet.VEGAN)).isEqualTo(6);
+            int numberOfMeal = 6;
+            Diet omnivore = Diet.OMNIVORE;
+            assertThat(getActual(participants, numberOfMeal, omnivore)).isEqualTo(numberOfMeal);
+            assertThat(getActual(participants, numberOfMeal, Diet.VEGAN)).isEqualTo(numberOfMeal);
         }
 
         @Test
@@ -87,12 +89,10 @@ class CoverTest {
             participants.add(new Participant(Diet.PESCATARIAN));
             participants.add(new Participant(Diet.PESCATARIAN));
 
-            Covers covers = new Restaurant().coversFor(participants, 6);
-
-            assertThat(covers.countOf(Diet.OMNIVORE)).isEqualTo(6);
-            assertThat(covers.countOf(Diet.VEGAN)).isEqualTo(12);
-            assertThat(covers.countOf(Diet.VEGETARIAN)).isEqualTo(18);
-            assertThat(covers.countOf(Diet.PESCATARIAN)).isEqualTo(24);
+            assertThat(getActual(participants, 6, Diet.OMNIVORE)).isEqualTo(6);
+            assertThat(getActual(participants, 6, Diet.VEGAN)).isEqualTo(12);
+            assertThat(getActual(participants, 6, Diet.VEGETARIAN)).isEqualTo(18);
+            assertThat(getActual(participants, 6, Diet.PESCATARIAN)).isEqualTo(24);
         }
 
         @Test
@@ -104,7 +104,7 @@ class CoverTest {
             participants.add(lateOmnivoreParticipant);
 
 
-            Integer countOfCover = RESTAURANT.coversFor(participants, 6).countOf(Diet.OMNIVORE);
+            Integer countOfCover = getActual(participants, 6, Diet.OMNIVORE);
 
             assertThat(countOfCover).isEqualTo(5);
         }
@@ -120,12 +120,21 @@ class CoverTest {
             participants.add(veganParticipant);
 
 
-            Integer countOfCoverOmnivore = RESTAURANT.coversFor(participants, 6).countOf(Diet.OMNIVORE);
-            Integer countOfCoverVegan = RESTAURANT.coversFor(participants, 6).countOf(Diet.VEGAN);
+            Integer countOfCoverOmnivore = getActual(participants, 6, Diet.OMNIVORE);
+            Integer countOfCoverVegan = getActual(participants, 6, Diet.VEGAN);
 
             assertThat(countOfCoverOmnivore).isEqualTo(5);
             assertThat(countOfCoverVegan).isEqualTo(6);
         }
+    }
+
+    private Integer getActual(List<Participant> participants, int numberOfMeal, Diet omnivore) {
+        Covers covers = new Covers(numberOfMeal);
+        List<DietCount> dietCounts = covers.countOfCoversByDietFor(participants);
+        dietCounts.stream().filter(dietCount -> Diet.OMNIVORE.equals(dietCount.getDiet())).findFirst()
+                .orElseGet(() -> { return new DietCount(Diet.OMNIVORE,0L); }).getCount();
+        return Covers.coversFor(participants, numberOfMeal).countOf(omnivore);
+
     }
 
     @Nested

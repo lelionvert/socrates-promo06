@@ -1,4 +1,6 @@
-package fr.lacombe.magic6tem;
+package fr.lacombe.magic6tem.cover;
+
+import fr.lacombe.magic6tem.CheckIn;
 
 import java.time.LocalDateTime;
 

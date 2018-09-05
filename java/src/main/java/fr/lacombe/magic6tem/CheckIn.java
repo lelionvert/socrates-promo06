@@ -11,7 +11,7 @@ public class CheckIn {
         this.arrivalDateTime = arrivalDateTime;
     }
 
-    boolean isAfter(LocalDateTime dateTime) {
+    public boolean isAfter(LocalDateTime dateTime) {
         if (dateTime == null) {
             throw new IllegalArgumentException("The date should be not null");
         }

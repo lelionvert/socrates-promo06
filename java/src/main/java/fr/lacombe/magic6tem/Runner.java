@@ -1,5 +1,10 @@
 package fr.lacombe.magic6tem;
 
+import fr.lacombe.magic6tem.coldmeal.ColdMeal;
+import fr.lacombe.magic6tem.cover.Covers;
+import fr.lacombe.magic6tem.cover.Diet;
+import fr.lacombe.magic6tem.cover.Participant;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +36,9 @@ class Runner {
                         more = scanner.nextLine().equals("Y");
 
                     }
-                    Restaurant restaurant = new Restaurant(checkIns);
+                    ColdMeal coldMeal = new ColdMeal(checkIns);
                     checkIns.forEach(System.out::println);
-                    System.out.println("Number of Cold Restaurant : " + restaurant.getCountOfColdMeal());
+                    System.out.println("Number of Cold Restaurant : " + coldMeal.getCountOfColdMeal());
                     break;
                 case "2":
                     List<Participant> participants = new ArrayList<>();
@@ -72,8 +77,7 @@ class Runner {
                         System.out.println("Do you want some more ? Y / N");
                         more = scanner.nextLine().equals("Y");
                     }
-                    restaurant = new Restaurant();
-                    System.out.println(restaurant.coversFor(participants, 6));
+                    System.out.println(Covers.coversFor(participants, 6));
                     break;
             }
         }
