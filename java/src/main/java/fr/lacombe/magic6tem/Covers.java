@@ -12,8 +12,10 @@ class Covers {
         int countOfDiet = (int) participants.stream().filter(participant -> participant.dietIs(diet)).count();
 
         if (countOfDiet != 0) {
-            Predicate<Participant> isLateForThursdayDinner = participant -> participant.isLateFor(Restaurant.THURSDAY_COLD_DINER_BEGINNING_HOUR);
-            int countOfDietForAllDays = countOfDiet * numberOfMeal - (int) participants.stream().filter(participant -> participant.dietIs(diet)).filter(isLateForThursdayDinner).count();
+            int countOfDietForAllDays = countOfDiet * numberOfMeal - (int) participants.stream()
+                    .filter(participant -> participant.dietIs(diet))
+                    .filter(participant -> participant.isLateFor(Restaurant.THURSDAY_COLD_DINER_BEGINNING_HOUR))
+                    .count();
             covers.put(diet, countOfDietForAllDays);
         }
     }

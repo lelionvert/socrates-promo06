@@ -83,17 +83,17 @@ class CoverTest {
             participants.add(new Participant(Diet.VEGETARIAN));
             participants.add(new Participant(Diet.VEGETARIAN));
             participants.add(new Participant(Diet.VEGETARIAN));
-            participants.add(new Participant(Diet.PESCARIAN));
-            participants.add(new Participant(Diet.PESCARIAN));
-            participants.add(new Participant(Diet.PESCARIAN));
-            participants.add(new Participant(Diet.PESCARIAN));
+            participants.add(new Participant(Diet.PESCATARIAN));
+            participants.add(new Participant(Diet.PESCATARIAN));
+            participants.add(new Participant(Diet.PESCATARIAN));
+            participants.add(new Participant(Diet.PESCATARIAN));
 
             Covers covers = new Restaurant().coversFor(participants, 6);
 
             assertThat(covers.countOf(Diet.OMNIVORE)).isEqualTo(6);
             assertThat(covers.countOf(Diet.VEGAN)).isEqualTo(12);
             assertThat(covers.countOf(Diet.VEGETARIAN)).isEqualTo(18);
-            assertThat(covers.countOf(Diet.PESCARIAN)).isEqualTo(24);
+            assertThat(covers.countOf(Diet.PESCATARIAN)).isEqualTo(24);
         }
 
         @Test

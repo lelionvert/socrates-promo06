@@ -41,7 +41,7 @@ class Runner {
                         System.out.println("Choose Diet  : ");
                         System.out.println("\t 1 --> VEGETARIAN ");
                         System.out.println("\t 2 --> VEGAN ");
-                        System.out.println("\t 3 --> PESCARIAN ");
+                        System.out.println("\t 3 --> PESCATARIAN ");
                         System.out.println("\t 4 --> OMNIVORE ");
                         System.out.println("");
                         String dietString = scanner.nextLine();
@@ -54,7 +54,7 @@ class Runner {
                             diet = Diet.VEGAN;
                         }
                         if (dietString.equals("3")) {
-                            diet = Diet.PESCARIAN;
+                            diet = Diet.PESCATARIAN;
                         }
                         if (dietString.equals("4")) {
                             diet = Diet.OMNIVORE;
