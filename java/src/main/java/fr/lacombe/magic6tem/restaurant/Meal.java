@@ -7,55 +7,12 @@ import java.util.Objects;
 
 public class Meal {
 
-    private long vegetarians = 0;
-    private long vegans = 0;
-    private long pescatarians = 0;
-    private long omnivorous = 0;
+    private int vegetarians = 0;
+    private int vegans = 0;
+    private int pescatarians = 0;
+    private int omnivorous = 0;
 
-    public Meal(int omnivorous) {
-        this.omnivorous = omnivorous;
-    }
-
-    public Meal() {
-    }
-
-    private void addVegetariansCovers(long vegetarians) {
-        this.vegetarians += vegetarians;
-    }
-
-    private void addVegansCovers(long vegans) {
-        this.vegans += vegans;
-    }
-
-    private void addPescatariansCovers(long pescatarians) {
-        this.pescatarians += pescatarians;
-    }
-
-    private void addOmnivorousCovers(long omnivorous) {
-        this.omnivorous += omnivorous;
-    }
-
-    public void addCoversByDiet(Diet diet, long numberEater){
-        switch (diet)
-        {
-            case OMNIVOROUS:
-                addOmnivorousCovers(numberEater);
-                break;
-            case VEGETARIAN:
-                addVegetariansCovers(numberEater);
-                break;
-            case PESCATARIAN:
-                addPescatariansCovers(numberEater);
-                break;
-            case VEGAN:
-                addVegansCovers(numberEater);
-                break;
-        }
-    }
-
-    public Meal(int omnivorous, int vegetarians) {
-        this.omnivorous = omnivorous;
-        this.vegetarians = vegetarians;
+    private Meal() {
     }
 
     public static Meal from(List<Participant> participants) {
@@ -67,8 +24,8 @@ public class Meal {
         return meal;
     }
 
-    private static long getCountForDiet(List<Participant> participants, Diet searchedDiet) {
-        return participants.stream().map(Participant::getDiet)
+    private static int getCountForDiet(List<Participant> participants, Diet searchedDiet) {
+        return (int) participants.stream().map(Participant::getDiet)
                 .filter(diet -> diet.equals(searchedDiet)).count();
     }
 
@@ -95,5 +52,48 @@ public class Meal {
             "\nvegetarians :\t" + vegetarians +
             "\nvegans :\t\t" + vegans +
             "\npescatarians :\t" + pescatarians;
+    }
+
+    public static final class MealBuilder {
+        private int vegetarians = 0;
+        private int vegans = 0;
+        private int pescatarians = 0;
+        private int omnivorous = 0;
+
+        private MealBuilder() {
+        }
+
+        public static MealBuilder aMeal() {
+            return new MealBuilder();
+        }
+
+        public MealBuilder withVegetarians(int vegetarians) {
+            this.vegetarians = vegetarians;
+            return this;
+        }
+
+        public MealBuilder withVegans(int vegans) {
+            this.vegans = vegans;
+            return this;
+        }
+
+        public MealBuilder withPescatarians(int pescatarians) {
+            this.pescatarians = pescatarians;
+            return this;
+        }
+
+        public MealBuilder withOmnivorous(int omnivorous) {
+            this.omnivorous = omnivorous;
+            return this;
+        }
+
+        public Meal build() {
+            Meal meal = new Meal();
+            meal.vegans = this.vegans;
+            meal.omnivorous = this.omnivorous;
+            meal.vegetarians = this.vegetarians;
+            meal.pescatarians = this.pescatarians;
+            return meal;
+        }
     }
 }
