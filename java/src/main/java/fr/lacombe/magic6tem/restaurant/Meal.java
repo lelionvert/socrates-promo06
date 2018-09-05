@@ -19,6 +19,40 @@ public class Meal {
     public Meal() {
     }
 
+    private void addVegetariansCovers(long vegetarians) {
+        this.vegetarians += vegetarians;
+    }
+
+    private void addVegansCovers(long vegans) {
+        this.vegans += vegans;
+    }
+
+    private void addPescatariansCovers(long pescatarians) {
+        this.pescatarians += pescatarians;
+    }
+
+    private void addOmnivorousCovers(long omnivorous) {
+        this.omnivorous += omnivorous;
+    }
+
+    public void addCoversByDiet(Diet diet, long numberEater){
+        switch (diet)
+        {
+            case OMNIVOROUS:
+                addOmnivorousCovers(numberEater);
+                break;
+            case VEGETARIAN:
+                addVegetariansCovers(numberEater);
+                break;
+            case PESCATARIAN:
+                addPescatariansCovers(numberEater);
+                break;
+            case VEGAN:
+                addVegansCovers(numberEater);
+                break;
+        }
+    }
+
     public Meal(int omnivorous, int vegetarians) {
         this.omnivorous = omnivorous;
         this.vegetarians = vegetarians;

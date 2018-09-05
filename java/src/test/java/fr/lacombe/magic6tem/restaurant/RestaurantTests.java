@@ -64,6 +64,9 @@ class GetMealByDietShould {
     private static final Participant PARTICIPANT_OMNIVOROUS = new Participant(LocalTime.of(20, 0));
     private static final Participant PARTICIPANT_VEGETARIAN = new Participant(LocalTime.of(20, 0), Diet.VEGETARIAN);
     private static final Participant LATE_PARTICIPANT = new Participant(LocalTime.of(22, 0));
+    public static final Participant PARTICIPANT_PESCATARIAN = new Participant(LocalTime.of(20, 0), Diet.PESCATARIAN);
+    public static final Participant PARTICIPANT_VEGAN = new Participant(LocalTime.of(20, 0), Diet.VEGAN);
+    public static final Participant LATE_PARTICIPANT_VEGETARIAN = new Participant(LocalTime.of(22, 0), Diet.VEGETARIAN);
 
     private List<Participant> participants = new ArrayList<>();
 
@@ -180,6 +183,39 @@ class GetMealByDietShould {
         meals.add(new Meal(1));
         meals.add(new Meal(3));
         Restaurant restaurant = new Restaurant(participants, 2);
+        assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
+    }
+
+    @Test
+    void return_list_of_meals_for_participants_with_all_characteristics() {
+        participants.add(PARTICIPANT_OMNIVOROUS);
+        participants.add(PARTICIPANT_VEGETARIAN);
+        participants.add(PARTICIPANT_PESCATARIAN);
+        participants.add(PARTICIPANT_VEGAN);
+
+        participants.add(LATE_PARTICIPANT);
+        participants.add(LATE_PARTICIPANT_VEGETARIAN);
+
+        Restaurant restaurant = new Restaurant(participants, 2);
+
+        List<Meal> meals = new ArrayList<>();
+
+        Meal firstMeal = new Meal();
+        firstMeal.addCoversByDiet(Diet.VEGETARIAN, 1);
+        firstMeal.addCoversByDiet(Diet.OMNIVOROUS,1);
+        firstMeal.addCoversByDiet(Diet.PESCATARIAN,1);
+        firstMeal.addCoversByDiet(Diet.VEGAN,1);
+
+        meals.add(firstMeal);
+
+        Meal secondMeal = new Meal();
+        secondMeal.addCoversByDiet(Diet.VEGETARIAN, 2);
+        secondMeal.addCoversByDiet(Diet.OMNIVOROUS,2);
+        secondMeal.addCoversByDiet(Diet.PESCATARIAN,1);
+        secondMeal.addCoversByDiet(Diet.VEGAN,1);
+
+        meals.add(secondMeal);
+
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 }
