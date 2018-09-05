@@ -9,7 +9,7 @@ public class Participant {
 
     public Participant(Diet diet) {
         this.diet = diet;
-        this.checkIn = CheckIn.of(LocalDateTime.of(2018,10,25,20,0));
+        this.checkIn = CheckIn.of(LocalDateTime.of(2018, 10, 25, 20, 0));
     }
 
     public Participant(Diet omnivore, CheckIn checkIn) {
@@ -23,5 +23,9 @@ public class Participant {
 
     public boolean isLateFor(LocalDateTime dateTime) {
         return checkIn.isAfter(dateTime);
+    }
+
+    public Diet getDiet() {
+        return this.diet;
     }
 }

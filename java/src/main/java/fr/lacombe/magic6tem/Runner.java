@@ -60,9 +60,9 @@ class Runner {
                             diet = Diet.OMNIVORE;
                         }
                         System.out.println("Participant is Late for Thursday ? Y / N");
-                        if(scanner.nextLine().equals("Y")){
-                            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018,10,25,22,0));
-                            participant = new Participant(diet,checkIn);
+                        if (scanner.nextLine().equals("Y")) {
+                            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018, 10, 25, 22, 0));
+                            participant = new Participant(diet, checkIn);
                             participants.add(participant);
 
                         } else {
@@ -73,7 +73,7 @@ class Runner {
                         more = scanner.nextLine().equals("Y");
                     }
                     restaurant = new Restaurant();
-                    System.out.println(restaurant.coversFor(participants,6));
+                    System.out.println(restaurant.coversFor(participants, 6));
                     break;
             }
         }

@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +20,7 @@ class CoverTest {
     class GetCountCover {
 
         @Test
-        public void return_0_when_given_no_participant(){
+        public void return_0_when_given_no_participant() {
             List<Participant> participants = new ArrayList<>();
             assertThat(((int) new Restaurant().coversFor(participants, 1).countOf(Diet.OMNIVORE))).isEqualTo(0);
         }
@@ -100,7 +99,7 @@ class CoverTest {
         void return_five_covers_for_participant_who_is_late_for_6_meals() {
 
             List<Participant> participants = new ArrayList<>();
-            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018,10,25,21,1));
+            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018, 10, 25, 21, 1));
             Participant lateOmnivoreParticipant = new Participant(Diet.OMNIVORE, checkIn);
             participants.add(lateOmnivoreParticipant);
 
@@ -114,7 +113,7 @@ class CoverTest {
         void return_five_covers_for_participants_which_one_is_late_and_omni_other_vegan_and_on_time_for_6_meals() {
 
             List<Participant> participants = new ArrayList<>();
-            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018,10,25,21,1));
+            CheckIn checkIn = CheckIn.of(LocalDateTime.of(2018, 10, 25, 21, 1));
             Participant lateOmnivoreParticipant = new Participant(Diet.OMNIVORE, checkIn);
             Participant veganParticipant = new Participant(Diet.VEGAN);
             participants.add(lateOmnivoreParticipant);
@@ -127,6 +126,39 @@ class CoverTest {
             assertThat(countOfCoverOmnivore).isEqualTo(5);
             assertThat(countOfCoverVegan).isEqualTo(6);
         }
+    }
+
+    @Nested
+    @DisplayName("Get count of covers By Diet For Participants Should")
+    class CountOfCoversByDietFor {
+
+        @Test
+        void return_list_one_cover_vegetarian_when_only_one_vegetarian_participant() {
+            Participant participantVege = new Participant(Diet.VEGETARIAN);
+            List<Participant> participants = Collections.singletonList(participantVege);
+            Covers covers = new Covers();
+            DietCount dietCount = new DietCount(Diet.VEGETARIAN,1L);
+            assertThat(covers.countOfCoversByDietFor(participants)).contains(dietCount);
+        }
+
+        @Test
+        void return_list_one_cover_omnivore_when_only_one_omnivore_participant() {
+            Participant participantOmnivore = new Participant(Diet.OMNIVORE);
+            List<Participant> participants = Collections.singletonList(participantOmnivore);
+            Covers covers = new Covers();
+            DietCount dietCount = new DietCount(Diet.OMNIVORE,1L);
+            assertThat(covers.countOfCoversByDietFor(participants)).contains(dietCount);
+        }
+
+        @Test
+        void return_list_two_cover_omnivore_when_two_omnivore_participants() {
+            Participant participantOmnivore = new Participant(Diet.OMNIVORE);
+            List<Participant> participants = Arrays.asList(participantOmnivore,participantOmnivore);
+            Covers covers = new Covers();
+            DietCount dietCount = new DietCount(Diet.OMNIVORE,2L);
+            assertThat(covers.countOfCoversByDietFor(participants)).contains(dietCount);
+        }
+
     }
 
 }
