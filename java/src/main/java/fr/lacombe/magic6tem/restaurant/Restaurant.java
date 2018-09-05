@@ -35,37 +35,20 @@ public class Restaurant {
         return participant.isArrivalTimeBefore(LIMIT_HOUR);
     }
 
-    public List<Diet> getCoversByDiet() {
+    public List<Meal> getMealsByDiet() {
         if (participants.isEmpty()) {
             return new ArrayList<>();
         }
 
-        List<Diet> coversList = new ArrayList<>();
-        for (int i = 0; i < meals; i++) {
-            for (Participant participant : participants) {
-                if (i == 0 && isArrivingAfterDinner(participant)) {
-                    continue;
-                }
-                coversList.add(participant.getDiet());
-            }
-        }
-        return coversList;
-    }
-
-    public List<Covers> getCoversByDiet2() {
-        if (participants.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        List<Covers> coversList = new ArrayList<>();
-        for (int meal = 0; meal < meals; meal++) {
+        List<Meal> meals = new ArrayList<>();
+        for (int meal = 0; meal < this.meals; meal++) {
             if (meal == 0) {
-                coversList.add(Covers.from(this.participants.stream()
+                meals.add(Meal.from(this.participants.stream()
                         .filter(this::isArrivingBeforeDinner).collect(Collectors.toList())));
                 continue;
             }
-            coversList.add(Covers.from(this.participants));
+            meals.add(Meal.from(this.participants));
         }
-        return coversList;
+        return meals;
     }
 }
