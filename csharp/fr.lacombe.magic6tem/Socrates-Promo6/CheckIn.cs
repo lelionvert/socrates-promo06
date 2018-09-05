@@ -12,15 +12,19 @@ namespace Socrates_Promo6
             _arrivalTime = arrivalTime;
         }
 
-        public bool IsSameDay(DateTime dinnerTime)
+        private bool IsSameDay(DateTime dinnerTime)
         {
             return _arrivalTime.Date.Equals(dinnerTime.Date);
         }
 
-        public bool IsBefore(DateTime date)
+        private bool IsAfter(DateTime date)
         {
-            return _arrivalTime < date;
+            return _arrivalTime > date;
         }
 
+        public bool IsGoingToBeLateFor(DinerTime dinerTime)
+        {
+            return IsSameDay(dinerTime.Start) && IsAfter(dinerTime.Start);
+        }
     }
 }

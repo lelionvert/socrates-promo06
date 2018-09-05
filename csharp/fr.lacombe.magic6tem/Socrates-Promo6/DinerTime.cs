@@ -4,13 +4,11 @@ namespace Socrates_Promo6
 {
     public class DinerTime
     {
-        private readonly DateTime start;
-        public DateTime Start => start;
-
+        public DateTime Start { get; }
 
         public DinerTime(DateTime dinnerTime)
         {
-            start = dinnerTime;
+            Start = dinnerTime;
         }
 
     }

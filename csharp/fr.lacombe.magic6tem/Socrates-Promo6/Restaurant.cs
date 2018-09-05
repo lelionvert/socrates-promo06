@@ -7,55 +7,45 @@ namespace Socrates_Promo6
 {
     public class Restaurant
     {
-        private readonly int _mealNumber;
+        private const int MEAL_NUMBER = 6;
+        private static readonly DinerTime dinerTime = new DinerTime(new DateTime(2018, 10, 31, 21, 0, 0));
 
-        public Restaurant(int mealNumber)
+        public static int GetColdMeals(List<CheckIn> checkIns)
         {
-            _mealNumber = mealNumber;
+            return checkIns.FindAll(checkIn => checkIn.IsGoingToBeLateFor(dinerTime)).Count;
         }
 
-        public Restaurant() : this(1)
+        public Covers GetNumberOfCoversDiet(List<Participant> participants)
         {
-
-        }
-
-
-        public static int GetColdMeals(List<CheckIn> checkIns, DinerTime dinerTime)
-        {
-            int count = 0;
-
-            foreach (var checkIn in checkIns)
-            {
-                if (checkIn.IsSameDay(dinerTime.Start))
-                {
-                    if (checkIn.IsBefore(dinerTime.Start))
-                        continue;
-                    count++;
-                }
-            }
-            return count;
-        }
-
-
-        public Dictionary<string, int> GetNumberOfCoversDiet(List<Participant> participants)
-        {
-
-            Dictionary<string, int> coversNumberWithDiet = new Dictionary<string, int>
-            {
-                {Diet.VEGETARIAN,0},{Diet.VEGAN,0},{Diet.PESCATARIAN,0},{Diet.OMNIVOROUS,0}
-            };
             if (participants == null)
-                return coversNumberWithDiet;
-            foreach (var participant in participants)
             {
-                if (coversNumberWithDiet.ContainsKey(participant.GetDiet()))
+                return Covers.OfParticipants(new List<Participant>(),MEAL_NUMBER,dinerTime);
+            }
+            return Covers.OfParticipants(participants, MEAL_NUMBER, dinerTime);
+        }
+
+        public List<Covers> GetNumberOfCoversDietPerMeal(List<Participant> participants)
+        {
+            List<Covers> coversPerMeal = new List<Covers>();
+            if (participants == null || participants.Count == 0)
+                return coversPerMeal;
+
+            for (int meal = 1; meal <= MEAL_NUMBER; meal++)
+            {
+
+                if (meal == 1)
                 {
-                    coversNumberWithDiet[participant.GetDiet()] += _mealNumber;
+                    coversPerMeal.Add(Covers.OfParticipants2(participants
+                        .FindAll(participant => participant.CheckIn.IsGoingToBeOnTimeFor(dinerTime))));
+                }
+                else
+                {
+                    coversPerMeal.Add(Covers.OfParticipants2(participants));
                 }
 
             }
+            return coversPerMeal;
 
-            return coversNumberWithDiet;
         }
     }
 }

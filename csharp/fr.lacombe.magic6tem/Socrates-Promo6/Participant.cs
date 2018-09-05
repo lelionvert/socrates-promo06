@@ -1,17 +1,16 @@
-﻿namespace Socrates_Promo6
+﻿using System;
+
+namespace Socrates_Promo6
 {
     public class Participant
     {
-        private readonly string _diet;
+        public string Diet { get; }
+        public CheckIn CheckIn { get; }
 
-        public Participant(string diet)
+        public Participant(string diet, CheckIn checkIn)
         {
-            _diet = diet;
-        }
-
-        public string GetDiet()
-        {
-            return this._diet;
+            Diet = diet;
+            CheckIn = checkIn;
         }
     }
 }

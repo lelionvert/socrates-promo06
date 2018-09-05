@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Socrates_Promo6</RootNamespace>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
 </Project>
