@@ -40,15 +40,15 @@ public class Restaurant {
             return new ArrayList<>();
         }
 
-        List<Meal> meals = new ArrayList<>();
-        for (int meal = 0; meal < this.meals; meal++) {
+        List<Meal> mealList = new ArrayList<>();
+        for (int meal = 0; meal < meals; meal++) {
             if (meal == 0) {
-                meals.add(Meal.from(this.participants.stream()
+                mealList.add(Meal.from(this.participants.stream()
                         .filter(this::isArrivingBeforeDinner).collect(Collectors.toList())));
                 continue;
             }
-            meals.add(Meal.from(this.participants));
+            mealList.add(Meal.from(this.participants));
         }
-        return meals;
+        return mealList;
     }
 }
