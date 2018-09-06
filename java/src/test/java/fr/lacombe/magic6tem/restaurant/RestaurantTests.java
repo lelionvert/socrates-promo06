@@ -76,7 +76,7 @@ class GetMealByDietShould {
     @Test
     void return_one_if_there_is_a_participant() {
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         Restaurant restaurant = new Restaurant(participants);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
@@ -85,7 +85,7 @@ class GetMealByDietShould {
     @Test
     void return_zero_if_one_participant_but_no_meal() {
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         Restaurant restaurant = new Restaurant(participants, 0);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -94,7 +94,7 @@ class GetMealByDietShould {
     void return_twelve_if_two_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
@@ -108,7 +108,7 @@ class GetMealByDietShould {
     @Test
     void return_six_omnivorous_covers_for_one_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
@@ -122,7 +122,7 @@ class GetMealByDietShould {
     @Test
     void return_six_vegetarian_covers_for_one_vegetarian_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
@@ -137,7 +137,7 @@ class GetMealByDietShould {
     void return_six_vegetarian_covers_and_six_omnivorous_for_two_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
@@ -151,7 +151,7 @@ class GetMealByDietShould {
     @Test
     void return_five_omnivorous_cover_for_one_late_participant_for_6_meals() {
         participants.add(LATE_PARTICIPANT);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
@@ -166,7 +166,7 @@ class GetMealByDietShould {
     void return_eleven_omnivorous_cover_for_one_late_participant_and_another_on_time_for_6_meals() {
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
@@ -182,7 +182,7 @@ class GetMealByDietShould {
         participants.add(LATE_PARTICIPANT);
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
         Restaurant restaurant = new Restaurant(participants, 2);
@@ -201,7 +201,7 @@ class GetMealByDietShould {
 
         Restaurant restaurant = new Restaurant(participants, 3);
 
-        List<Meal> meals = new ArrayList<>();
+        Meals meals = new Meals((new ArrayList<>()));
 
         Meal firstMeal = MealBuilder.aMeal()
             .withOmnivorous(1)
@@ -229,6 +229,16 @@ class GetMealByDietShould {
                                 .build();
         meals.add(thirdMeal);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
+    }
+
+    @Test
+    void return_meal_for_thursday_night() {
+        participants.add(PARTICIPANT_OMNIVOROUS);
+        Meal mealThursdayNight = MealBuilder.aMeal().withOmnivorous(1).build();
+
+        Restaurant restaurant = new Restaurant(participants);
+
+        assertThat(restaurant.getMeal("Thursday Night")).isEqualTo(mealThursdayNight);
     }
 
     public static final class MealBuilder {

@@ -1,8 +1,5 @@
 package fr.lacombe.magic6tem.restaurant;
 
-import fr.lacombe.magic6tem.conference.Participant;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -18,12 +15,12 @@ public class Meal {
         this.coversByDiet = coversByDiet;
     }
 
-    public static Meal from(List<Participant> participants) {
+    public static Meal from(List<Diet> diets) {
         Map<Diet, Long> coversByDiet;
 
-        coversByDiet = participants.stream()
-            .map(Participant::getDiet)
+        coversByDiet = diets.stream()
             .collect(Collectors.groupingBy(diet -> diet, Collectors.counting()));
+
 
         Stream.of(Diet.values()).forEach(diet -> coversByDiet.computeIfAbsent(diet,c -> 0L));
 
