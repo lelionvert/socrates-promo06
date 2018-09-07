@@ -12,14 +12,6 @@ class DietCount {
         this.count = count;
     }
 
-    public Diet getDiet() {
-        return diet;
-    }
-
-    public Long getCount() {
-        return count;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

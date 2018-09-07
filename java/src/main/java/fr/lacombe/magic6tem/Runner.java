@@ -77,7 +77,6 @@ class Runner {
                         System.out.println("Do you want some more ? Y / N");
                         more = scanner.nextLine().equals("Y");
                     }
-                    System.out.println(Covers.coversFor(participants, 6));
                     break;
             }
         }
