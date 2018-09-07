@@ -1,35 +1,29 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Socrates_Promo6
 {
     public class Covers
     {
-        private Dictionary<string, int> coversByDiet;
+        private readonly Dictionary<string, int> _coversByDiet;
 
-        private Covers()
+        private Covers(Dictionary<string, int> coversByDiet)
         {
-            coversByDiet = new Dictionary<string, int>
-            {
-                {"VEGETARIAN",0},
-                {"VEGAN",0},
-                {"OMNIVOROUS",0},
-                {"PESCATARIAN",0}
-            };
+            _coversByDiet = coversByDiet;
         }
 
-        public int Vegetarian => coversByDiet["VEGETARIAN"];
-        public int Vegan => coversByDiet["VEGAN"];
-        public int Omnivorous => coversByDiet["OMNIVOROUS"];
-        public int Pescatarian => coversByDiet["PESCATARIAN"];
+        public int Vegetarian => _coversByDiet[Diet.VEGETARIAN];
+        public int Vegan => _coversByDiet[Diet.VEGAN];
+        public int Omnivorous => _coversByDiet[Diet.OMNIVOROUS];
+        public int Pescatarian => _coversByDiet[Diet.PESCATARIAN];
 
-        public static Covers OfParticipants(List<Participant> participants)
+        public static Covers OfParticipants(IEnumerable<Participant> participants)
         {
-            Covers covers = new Covers();
-            foreach (Participant participant in participants)
-            {
-                covers.coversByDiet[participant.Diet] +=1;
-            }
-            return covers;
+            var countEachDiet = participants
+                .GroupBy(participant => participant.Diet)
+                .ToDictionary(x=>x.Key, x=> x.Count());
+
+            return new Covers(countEachDiet);
 
         }
     }
