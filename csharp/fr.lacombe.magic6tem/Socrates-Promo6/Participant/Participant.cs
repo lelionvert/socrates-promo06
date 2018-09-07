@@ -11,6 +11,7 @@ namespace Socrates_Promo6
         {
             Diet = diet;
             CheckIn = checkIn;
+            
         }
     }
 }

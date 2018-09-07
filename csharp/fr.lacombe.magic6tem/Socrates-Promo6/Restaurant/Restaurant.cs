@@ -15,16 +15,7 @@ namespace Socrates_Promo6
             return checkIns.FindAll(checkIn => checkIn.IsGoingToBeLateFor(dinerTime)).Count;
         }
 
-        public Covers GetNumberOfCoversDiet(List<Participant> participants)
-        {
-            if (participants == null)
-            {
-                return Covers.OfParticipants(new List<Participant>(),MEAL_NUMBER,dinerTime);
-            }
-            return Covers.OfParticipants(participants, MEAL_NUMBER, dinerTime);
-        }
-
-        public List<Covers> GetNumberOfCoversDietPerMeal(List<Participant> participants)
+        public IEnumerable<Covers> GetNumberOfCoversDietPerMeal(List<Participant> participants)
         {
             List<Covers> coversPerMeal = new List<Covers>();
             if (participants == null || participants.Count == 0)
@@ -35,12 +26,12 @@ namespace Socrates_Promo6
 
                 if (meal == 1)
                 {
-                    coversPerMeal.Add(Covers.OfParticipants2(participants
+                    coversPerMeal.Add(Covers.OfParticipants(participants
                         .FindAll(participant => participant.CheckIn.IsGoingToBeOnTimeFor(dinerTime))));
                 }
                 else
                 {
-                    coversPerMeal.Add(Covers.OfParticipants2(participants));
+                    coversPerMeal.Add(Covers.OfParticipants(participants));
                 }
 
             }

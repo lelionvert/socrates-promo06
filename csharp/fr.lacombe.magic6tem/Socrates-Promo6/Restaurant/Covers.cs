@@ -22,20 +22,7 @@ namespace Socrates_Promo6
         public int Omnivorous => coversByDiet["OMNIVOROUS"];
         public int Pescatarian => coversByDiet["PESCATARIAN"];
 
-        public static Covers OfParticipants(IEnumerable<Participant> participants, int meals, DinerTime dinerTime)
-        {
-            Covers covers = new Covers();
-            foreach (Participant participant in participants)
-            {
-                var mealPerParticipant = meals;
-                if (participant.CheckIn.IsGoingToBeLateFor(dinerTime))
-                        mealPerParticipant -= 1;
-                covers.coversByDiet[participant.Diet] += mealPerParticipant;
-            }
-            return covers;
-        }
-
-        public static Covers OfParticipants2(List<Participant> participants)
+        public static Covers OfParticipants(List<Participant> participants)
         {
             Covers covers = new Covers();
             foreach (Participant participant in participants)
