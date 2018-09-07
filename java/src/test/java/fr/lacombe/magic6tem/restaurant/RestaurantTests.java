@@ -182,9 +182,11 @@ class GetMealByDietShould {
         participants.add(LATE_PARTICIPANT);
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
+
         Meals meals = new Meals((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
+
         Restaurant restaurant = new Restaurant(participants, 2);
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
@@ -234,11 +236,24 @@ class GetMealByDietShould {
     @Test
     void return_meal_for_thursday_night() {
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meal mealThursdayNight = MealBuilder.aMeal().withOmnivorous(1).build();
+        participants.add(PARTICIPANT_OMNIVOROUS);
+
+        Meal mealThursdayNight = MealBuilder.aMeal().withOmnivorous(2).build();
 
         Restaurant restaurant = new Restaurant(participants);
 
         assertThat(restaurant.getMeal("Thursday Night")).isEqualTo(mealThursdayNight);
+    }
+    @Test
+    void return_meal_for_friday_noon() {
+        participants.add(LATE_PARTICIPANT);
+        participants.add(PARTICIPANT_OMNIVOROUS);
+
+        Meal mealThursdayNight = MealBuilder.aMeal().withOmnivorous(2).build();
+
+        Restaurant restaurant = new Restaurant(participants, 4);
+
+        assertThat(restaurant.getMeal("Friday Noon")).isEqualTo(mealThursdayNight);
     }
 
     public static final class MealBuilder {

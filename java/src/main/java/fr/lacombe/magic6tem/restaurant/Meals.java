@@ -12,8 +12,15 @@ class Meals {
         this.meals = meals;
     }
 
+    public Meals() {
+        this.meals = new ArrayList<>();
+    }
+
     public void add(Meal meal) {
         this.meals.add(meal);
+    }
+    public Meal getMealByIndex(int index){
+        return meals.get(index);
     }
 
     @Override

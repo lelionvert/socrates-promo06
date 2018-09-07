@@ -1,9 +1,9 @@
 package fr.lacombe.magic6tem.restaurant;
 
 import fr.lacombe.magic6tem.conference.Participant;
+import fr.lacombe.magic6tem.conference.OrganisationMeal;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,15 +12,19 @@ public class Restaurant {
 
     private static final LocalTime LIMIT_HOUR = LocalTime.of(21, 0);
     private int meals = 1;
+    private OrganisationMeal organisationMeal;
+
     private List<Participant> participants;
 
     public Restaurant(List<Participant> participants) {
         this.participants = participants;
+        this.organisationMeal = OrganisationMeal.getOrganisationMeal();
     }
 
     public Restaurant(List<Participant> participants, int meals) {
         this.participants = participants;
         this.meals = meals;
+        this.organisationMeal = OrganisationMeal.getOrganisationMeal();
     }
 
     public int getColdMeals() {
@@ -38,10 +42,10 @@ public class Restaurant {
 
     public Meals getMealsByDiet() {
         if (participants.isEmpty()) {
-            return new Meals(new ArrayList<>());
+            return new Meals();
         }
 
-        Meals meals = new Meals(new ArrayList<>());
+        Meals meals = new Meals();
         for (int numberMeal = 0; numberMeal < this.meals; numberMeal++) {
             Stream<Participant> stream = this.participants.stream();
             Stream<Participant> participantStream;
@@ -66,6 +70,16 @@ public class Restaurant {
     }
 
     public Meal getMeal(String mealTime) {
+
+        int indexOfMealTime = organisationMeal.getMealsOfTheConference().indexOf(mealTime);
+        if (indexOfMealTime == -1){
+            throw new IllegalArgumentException(mealTime + " is not a good meal name");
+        }
+        if (indexOfMealTime < meals){
+            return getMealsByDiet().getMealByIndex(indexOfMealTime);
+        }
+
+
         return Meal.from(participants.stream()
             .map(Participant::getDiet).collect(Collectors.toList()));
     }
