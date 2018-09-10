@@ -27,14 +27,14 @@ namespace Socrates_Promo6
             return _arrivalTime < date;
         }
 
-        public bool IsGoingToBeLateFor(DinerTime dinerTime)
+        public bool IsGoingToBeLateFor(MealTime mealTime)
         {
-            return IsSameDay(dinerTime.Start) && IsAfter(dinerTime.Start);
+            return IsSameDay(mealTime.Start) && IsAfter(mealTime.Start);
         }
 
-        public bool IsGoingToBeOnTimeFor(DinerTime dinerTime)
+        public bool IsGoingToBeOnTimeFor(MealTime mealTime)
         {
-            return IsSameDay(dinerTime.Start) && IsBefore(dinerTime.Start);
+            return IsSameDay(mealTime.Start) && IsBefore(mealTime.Start);
         }
     }
 }

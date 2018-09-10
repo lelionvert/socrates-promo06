@@ -31,7 +31,7 @@ namespace Socrates_Promo6.Test
             var participants = new List<Participant>
                 {PARTICIPANT};
             IEnumerable<Covers> covers = RESTAURANT.GetNumberOfCoversDietPerMeal(participants);
-            Check.That(covers.Sum(covers1 => covers1.Omnivorous)).Equals(6);
+            Check.That(covers.Sum(cover => cover.Omnivorous)).Equals(6);
         }
 
         [Fact]
@@ -68,6 +68,26 @@ namespace Socrates_Promo6.Test
             Check.That(covers.Sum(cover => cover.Vegan)).Equals(6);
             Check.That(covers.Sum(cover => cover.Omnivorous)).Equals(6);
             Check.That(covers.Sum(cover => cover.Pescatarian)).Equals(6);
+        }
+
+        [Fact]
+        public void Return_one_of_each_diet_cover_for_one_meal_when_participants_are_not_late()
+        {
+            IMeal meal = new StandardMeal();
+            var participantVg = new Participant(Diet.VEGETARIAN, ON_TIME_DATE);
+            var participantVn = new Participant(Diet.VEGAN, ON_TIME_DATE);
+            var participantO = new Participant(Diet.OMNIVOROUS, ON_TIME_DATE);
+            var participantP = new Participant(Diet.PESCATARIAN, ON_TIME_DATE);
+            var participants = new List<Participant>
+                {participantVg, participantVn, participantO, participantP};
+
+            IEnumerable<Covers> covers =
+                new Restaurant(new List<IMeal> {meal}).GetNumberOfCoversDietPerMeal(participants);
+
+            Check.That(covers.Sum(cover => cover.Vegetarian)).Equals(1);
+            Check.That(covers.Sum(cover => cover.Vegan)).Equals(1);
+            Check.That(covers.Sum(cover => cover.Omnivorous)).Equals(1);
+            Check.That(covers.Sum(cover => cover.Pescatarian)).Equals(1);
         }
     }
 }

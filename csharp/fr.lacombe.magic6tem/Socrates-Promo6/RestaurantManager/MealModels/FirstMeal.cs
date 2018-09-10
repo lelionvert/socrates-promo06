@@ -6,7 +6,7 @@ namespace Socrates_Promo6
 {
     public class FirstMeal : IMeal
     {
-        public static readonly DinerTime DinerTime = new DinerTime(new DateTime(2018, 10, 31, 21, 0, 0));
+        public static readonly MealTime DinerTime = new MealTime(new DateTime(2018, 10, 31, 21, 0, 0));
 
         public Covers From(IEnumerable<Participant> participants)
         {

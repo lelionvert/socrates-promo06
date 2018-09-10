@@ -2,11 +2,11 @@
 
 namespace Socrates_Promo6
 {
-    public class DinerTime
+    public class MealTime
     {
         public DateTime Start { get; }
 
-        public DinerTime(DateTime dinnerTime)
+        public MealTime(DateTime dinnerTime)
         {
             Start = dinnerTime;
         }
