@@ -6,16 +6,16 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Meal {
+public class Covers {
 
     private final Map<Diet, Long> coversByDiet;
 
-    protected Meal(Map<Diet, Long> coversByDiet){
+    protected Covers(Map<Diet, Long> coversByDiet){
 
         this.coversByDiet = coversByDiet;
     }
 
-    public static Meal from(List<Diet> diets) {
+    public static Covers from(List<Diet> diets) {
         Map<Diet, Long> coversByDiet;
 
         coversByDiet = diets.stream()
@@ -24,15 +24,15 @@ public class Meal {
 
         Stream.of(Diet.values()).forEach(diet -> coversByDiet.computeIfAbsent(diet,c -> 0L));
 
-        return new Meal(coversByDiet);
+        return new Covers(coversByDiet);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Meal meal = (Meal) o;
-        return Objects.equals(coversByDiet, meal.coversByDiet);
+        Covers covers = (Covers) o;
+        return Objects.equals(coversByDiet, covers.coversByDiet);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Meal {
 
     @Override
     public String toString() {
-        return "Meal{" +
+        return "Covers{" +
             "coversByDiet=" + coversByDiet +
             '}';
     }
