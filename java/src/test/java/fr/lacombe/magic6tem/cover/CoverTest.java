@@ -57,6 +57,31 @@ class CoverTest {
         }
 
         @Test
+        void return_covers_from_a_list_of_participants_with_different_diets() {
+            Participant participantOmnivore = new Participant(Diet.OMNIVORE);
+            Participant participantVegan = new Participant(Diet.VEGAN);
+            Participant participantVegetarian = new Participant(Diet.VEGETARIAN);
+            Participant participantPescatarian = new Participant(Diet.PESCATARIAN);
+
+            List<Participant> participants = Arrays.asList(participantOmnivore,participantOmnivore, participantPescatarian, participantVegetarian, participantVegan, participantVegan);
+
+            DietCount dietCountOmnivore = new DietCount(Diet.OMNIVORE,2L);
+            DietCount dietCountPescatarian = new DietCount(Diet.PESCATARIAN,1L);
+            DietCount dietCountVegetarian = new DietCount(Diet.VEGETARIAN,1L);
+            DietCount dietCountVegan = new DietCount(Diet.VEGAN,2L);
+
+            List<Diet> participantsDiet = participants.stream()
+                    .map(Participant::getDiet).collect(Collectors.toList());
+            Covers covers = Covers.from(participantsDiet);
+
+            assertThat(covers.contains(dietCountOmnivore)).isTrue();
+           assertThat(covers.contains(dietCountPescatarian)).isTrue();
+            assertThat(covers.contains(dietCountVegetarian)).isTrue();
+            assertThat(covers.contains(dietCountVegan)).isTrue();
+
+        }
+
+        @Test
         void return_list_zero_cover_when_no_participants() {
             List<Participant> participants = new ArrayList<>();
 
