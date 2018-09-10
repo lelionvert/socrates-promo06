@@ -1,5 +1,6 @@
 package fr.lacombe.magic6tem.restaurant;
 
+import fr.lacombe.magic6tem.conference.OrganisationMeal;
 import fr.lacombe.magic6tem.conference.Participant;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ class GetColdMealShould {
     @Test
     public void return_zero_if_one_participant_checked_in_before_21_pm() {
         participants.add(EARLY_PARTICIPANT);
-        Restaurant restaurant = new Restaurant(participants);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         int coldMeals = restaurant.getColdMeals();
         assertThat(coldMeals).isEqualTo(0);
     }
@@ -29,7 +30,7 @@ class GetColdMealShould {
     @Test
     public void return_one_if_one_participant_checked_in_after_21_pm() {
         participants.add(LATE_PARTICIPANT);
-        Restaurant restaurant = new Restaurant(participants);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         int coldMeals = restaurant.getColdMeals();
         assertThat(coldMeals).isEqualTo(1);
     }
@@ -38,7 +39,7 @@ class GetColdMealShould {
     public void return_one_if_two_participants_checked_in_but_only_one_after_21_pm() {
         participants.add(LATE_PARTICIPANT);
         participants.add(EARLY_PARTICIPANT);
-        Restaurant restaurant = new Restaurant(participants);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         int coldMeals = restaurant.getColdMeals();
         assertThat(coldMeals).isEqualTo(1);
     }
@@ -47,7 +48,7 @@ class GetColdMealShould {
     public void return_two_if_two_participants_checked_in_after_21_pm() {
         participants.add(LATE_PARTICIPANT);
         participants.add(LATE_PARTICIPANT);
-        Restaurant restaurant = new Restaurant(participants);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         int coldMeals = restaurant.getColdMeals();
         assertThat(coldMeals).isEqualTo(2);
     }
@@ -56,14 +57,14 @@ class GetColdMealShould {
     public void return_zero_if_two_participants_checked_in_before_21_pm() {
         participants.add(EARLY_PARTICIPANT);
         participants.add(EARLY_PARTICIPANT);
-        Restaurant restaurant = new Restaurant(participants);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         int coldMeals = restaurant.getColdMeals();
         assertThat(coldMeals).isEqualTo(0);
     }
 
 }
 
-class GetMealByDietShould {
+class GetCoversByDietShould {
     private static final Participant PARTICIPANT_OMNIVOROUS = new Participant(LocalTime.of(20, 0));
     private static final Participant PARTICIPANT_VEGETARIAN = new Participant(LocalTime.of(20, 0), Diet.VEGETARIAN);
     private static final Participant LATE_PARTICIPANT = new Participant(LocalTime.of(22, 0));
@@ -74,62 +75,45 @@ class GetMealByDietShould {
     private List<Participant> participants = new ArrayList<>();
 
     @Test
-    void return_one_if_there_is_a_participant() {
-        participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
-        meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
-        Restaurant restaurant = new Restaurant(participants);
-        assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
-    }
-
-    @Test
-    void return_zero_if_one_participant_but_no_meal() {
-        participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
-        Restaurant restaurant = new Restaurant(participants, 0);
-        assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
-    }
-
-    @Test
     void return_twelve_if_two_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
-        Restaurant restaurant = new Restaurant(participants, 6);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
     @Test
     void return_six_omnivorous_covers_for_one_participant_and_six_meals() {
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
-        Restaurant restaurant = new Restaurant(participants, 6);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
     @Test
     void return_six_vegetarian_covers_for_one_vegetarian_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withVegetarians(1).build());
-        Restaurant restaurant = new Restaurant(participants, 6);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
@@ -137,28 +121,28 @@ class GetMealByDietShould {
     void return_six_vegetarian_covers_and_six_omnivorous_for_two_participant_and_six_meals() {
         participants.add(PARTICIPANT_VEGETARIAN);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).build());
-        Restaurant restaurant = new Restaurant(participants, 6);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
     @Test
     void return_five_omnivorous_cover_for_one_late_participant_for_6_meals() {
         participants.add(LATE_PARTICIPANT);
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
-        Restaurant restaurant = new Restaurant(participants, 6);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
@@ -166,14 +150,14 @@ class GetMealByDietShould {
     void return_eleven_omnivorous_cover_for_one_late_participant_and_another_on_time_for_6_meals() {
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
-        Restaurant restaurant = new Restaurant(participants, 6);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
@@ -182,10 +166,16 @@ class GetMealByDietShould {
         participants.add(LATE_PARTICIPANT);
         participants.add(LATE_PARTICIPANT);
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meals meals = new Meals((new ArrayList<>()));
+
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
         meals.add(MealBuilder.aMeal().withOmnivorous(1).build());
         meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
-        Restaurant restaurant = new Restaurant(participants, 2);
+        meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(3).build());
+
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
@@ -199,53 +189,52 @@ class GetMealByDietShould {
         participants.add(LATE_PARTICIPANT);
         participants.add(LATE_PARTICIPANT_VEGETARIAN);
 
-        Restaurant restaurant = new Restaurant(participants, 3);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
 
-        Meals meals = new Meals((new ArrayList<>()));
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
 
-        Meal firstMeal = MealBuilder.aMeal()
-            .withOmnivorous(1)
-            .withVegetarians(1)
-            .withVegans(1)
-            .withPescatarians(1)
-            .build();
-
-        meals.add(firstMeal);
-
-        Meal secondMeal = MealBuilder.aMeal()
-            .withOmnivorous(2)
-            .withVegetarians(2)
-            .withVegans(1)
-            .withPescatarians(1)
-            .build();
-
-        meals.add(secondMeal);
-
-        Meal thirdMeal = MealBuilder.aMeal()
-                                .withOmnivorous(2)
-                                .withVegetarians(2)
-                                .withVegans(1)
-                                .withPescatarians(1)
-                                .build();
-        meals.add(thirdMeal);
+        meals.add(MealBuilder.aMeal().withOmnivorous(1).withVegetarians(1).withVegans(1).withPescatarians(1).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).withVegetarians(2).withVegans(1).withPescatarians(1).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).withVegetarians(2).withVegans(1).withPescatarians(1).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).withVegetarians(2).withVegans(1).withPescatarians(1).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).withVegetarians(2).withVegans(1).withPescatarians(1).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).withVegetarians(2).withVegans(1).withPescatarians(1).build());
         assertThat(restaurant.getMealsByDiet()).isEqualTo(meals);
     }
 
     @Test
     void return_meal_for_thursday_night() {
         participants.add(PARTICIPANT_OMNIVOROUS);
-        Meal mealThursdayNight = MealBuilder.aMeal().withOmnivorous(1).build();
+        participants.add(PARTICIPANT_OMNIVOROUS);
 
-        Restaurant restaurant = new Restaurant(participants);
+        MealsListOfConference meals = new MealsListOfConference((new ArrayList<>()));
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
+        meals.add(MealBuilder.aMeal().withOmnivorous(2).build());
 
-        assertThat(restaurant.getMeal("Thursday Night")).isEqualTo(mealThursdayNight);
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
+
+        assertThat(restaurant.getMeal("Thursday Night")).isEqualTo(meals.getMealByIndex(0));
+    }
+    @Test
+    void return_meal_for_friday_noon() {
+        participants.add(LATE_PARTICIPANT);
+        participants.add(PARTICIPANT_OMNIVOROUS);
+
+        Covers coversThursdayNight = MealBuilder.aMeal().withOmnivorous(2).build();
+
+        Restaurant restaurant = new Restaurant(participants, OrganisationMeal.getOrganisationMeal());
+
+        assertThat(restaurant.getMeal("Friday Noon")).isEqualTo(coversThursdayNight);
     }
 
     public static final class MealBuilder {
         private long vegetarians = 0;
         private long vegans = 0;
         private long pescatarians = 0;
-
         private long omnivorous = 0;
 
         private MealBuilder() {
@@ -275,7 +264,7 @@ class GetMealByDietShould {
             return this;
         }
 
-        public Meal build() {
+        public Covers build() {
 
             Map<Diet, Long> coversByDiet = new HashMap<>();
             coversByDiet.put(Diet.VEGAN, this.vegans);
@@ -284,7 +273,7 @@ class GetMealByDietShould {
             coversByDiet.put(Diet.VEGETARIAN, this.vegetarians);
 
             Stream.of(Diet.values()).forEach(diet -> coversByDiet.computeIfAbsent(diet, c -> 0L));
-            return new Meal(coversByDiet);
+            return new Covers(coversByDiet);
         }
     }
 }

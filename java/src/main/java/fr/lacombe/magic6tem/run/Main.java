@@ -1,5 +1,6 @@
 package fr.lacombe.magic6tem.run;
 
+import fr.lacombe.magic6tem.conference.OrganisationMeal;
 import fr.lacombe.magic6tem.conference.Participant;
 import fr.lacombe.magic6tem.restaurant.Restaurant;
 
@@ -44,7 +45,7 @@ public class Main {
             }
 
         }
-        Restaurant restaurant = new Restaurant(participantList);
+        Restaurant restaurant = new Restaurant(participantList, OrganisationMeal.getOrganisationMeal());
         System.out.println("You will need " + restaurant.getColdMeals() + " cold meals to be prepared.");
         System.out.println("Go restaurant yourself");
     }

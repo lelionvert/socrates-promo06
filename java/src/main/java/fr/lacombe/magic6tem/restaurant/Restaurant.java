@@ -1,9 +1,9 @@
 package fr.lacombe.magic6tem.restaurant;
 
 import fr.lacombe.magic6tem.conference.Participant;
+import fr.lacombe.magic6tem.conference.OrganisationMeal;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -11,16 +11,13 @@ import java.util.stream.Stream;
 public class Restaurant {
 
     private static final LocalTime LIMIT_HOUR = LocalTime.of(21, 0);
-    private int meals = 1;
+    private OrganisationMeal organisationMeal;
+
     private List<Participant> participants;
 
-    public Restaurant(List<Participant> participants) {
+    public Restaurant(List<Participant> participants, OrganisationMeal organisationMeal) {
         this.participants = participants;
-    }
-
-    public Restaurant(List<Participant> participants, int meals) {
-        this.participants = participants;
-        this.meals = meals;
+        this.organisationMeal = organisationMeal;
     }
 
     public int getColdMeals() {
@@ -36,13 +33,13 @@ public class Restaurant {
         return participant.isArrivalTimeBefore(LIMIT_HOUR);
     }
 
-    public Meals getMealsByDiet() {
+    public MealsListOfConference getMealsByDiet() {
         if (participants.isEmpty()) {
-            return new Meals(new ArrayList<>());
+            return new MealsListOfConference();
         }
 
-        Meals meals = new Meals(new ArrayList<>());
-        for (int numberMeal = 0; numberMeal < this.meals; numberMeal++) {
+        MealsListOfConference meals = new MealsListOfConference();
+        for (int numberMeal = 0; numberMeal < organisationMeal.getMealsOfTheConference().size(); numberMeal++) {
             Stream<Participant> stream = this.participants.stream();
             Stream<Participant> participantStream;
 
@@ -54,7 +51,7 @@ public class Restaurant {
                 participantStream = stream;
             }
 
-            meals.add(Meal.from(participantStream
+            meals.add(Covers.from(participantStream
                 .map(Participant::getDiet)
                 .collect(Collectors.toList())));
         }
@@ -65,8 +62,13 @@ public class Restaurant {
         return numberMeal == 0;
     }
 
-    public Meal getMeal(String mealTime) {
-        return Meal.from(participants.stream()
-            .map(Participant::getDiet).collect(Collectors.toList()));
+    public Covers getMeal(String mealTime) {
+
+        int indexOfMealTime = organisationMeal.getMealsOfTheConference().indexOf(mealTime);
+        if(organisationMeal.getMealsOfTheConference().contains(mealTime)){
+            return getMealsByDiet().getMealByIndex(indexOfMealTime);
+        } else {
+            throw new IllegalArgumentException(mealTime + " is not a good meal name");
+        }
     }
 }
