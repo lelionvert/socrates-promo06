@@ -1,9 +1,6 @@
 package fr.lacombe.magic6tem.cover;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,5 +28,18 @@ public class Covers {
 
     public boolean isEmpty() {
         return this.countOfCoversByDiet.isEmpty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Covers covers = (Covers) o;
+        return Objects.equals(countOfCoversByDiet, covers.countOfCoversByDiet);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(countOfCoversByDiet);
     }
 }

@@ -99,7 +99,7 @@ class CoverTest {
     class CountOfCoversByDietForAllMeals {
 
 //        @Test
-//        void name() {
+//        void return_Meal_with_only_one_vegan_cover_when_given_vegan_participant() {
 //            Participant participantVege = new Participant(Diet.VEGETARIAN);
 //            List<Participant> participants = Collections.singletonList(participantVege);
 //            Covers covers = new Covers();
