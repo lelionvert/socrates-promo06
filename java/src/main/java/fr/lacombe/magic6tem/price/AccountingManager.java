@@ -1,23 +1,40 @@
 package fr.lacombe.magic6tem.price;
 
-import fr.lacombe.magic6tem.conference.Participant;
+import java.time.LocalDateTime;
+import java.util.Map;
 
 class AccountingManager {
 
-    public static final DoubleRoomPackage DOUBLE_ROOM_PACKAGE = new DoubleRoomPackage();
-    public static final TripleRoomPackage TRIPLE_ROOM_PACKAGE = new TripleRoomPackage();
-    public static final NoRoomPackage NO_ROOM_PACKAGE = new NoRoomPackage();
+    private Map<PackageChoice, Price> packageChoicePriceMap;
+    private LocalDateTime limitDateTimeOfFirstMeal;
+    private LocalDateTime limitDateTimeOfLastMeal;
+    private int priceValueOfOneMeal;
 
-    public static Price calculatePrice(Attendee attendee) {
-        if (attendee.choose(DOUBLE_ROOM_PACKAGE)){
-            return new Price(510);
+    public AccountingManager(Map<PackageChoice, Price> packageChoicePriceMap, LocalDateTime limitDateTimeOfFirstMeal, LocalDateTime limitDateTimeOfLastMeal, int priceValueOfOneMeal) {
+        this.packageChoicePriceMap = packageChoicePriceMap;
+        this.limitDateTimeOfFirstMeal = limitDateTimeOfFirstMeal;
+        this.limitDateTimeOfLastMeal = limitDateTimeOfLastMeal;
+        this.priceValueOfOneMeal = priceValueOfOneMeal;
+    }
+
+    public Price calculatePrice(Attendee attendee) {
+        Price price;
+
+        price = this.packageChoicePriceMap.entrySet().stream()
+                .filter(entry -> attendee.choose(entry.getKey()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElseGet(() -> new Price(0));
+
+        if (attendee.checkinAfter(limitDateTimeOfFirstMeal)){
+            price =  price.removePriceOfOnMeal(priceValueOfOneMeal);
         }
-        if (attendee.choose(TRIPLE_ROOM_PACKAGE)){
-            return new Price(410);
+
+        if (attendee.checkoutBefore(limitDateTimeOfLastMeal)){
+            price = price.removePriceOfOnMeal(priceValueOfOneMeal);
         }
-        if (attendee.choose(NO_ROOM_PACKAGE)){
-            return new Price(240);
-        }
-        return new Price(610);
+        return price;
+
+
     }
 }

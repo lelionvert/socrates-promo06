@@ -30,4 +30,9 @@ class Price {
                 "\nvalue=" + value +
                 '}';
     }
+
+    public Price removePriceOfOnMeal(int priceOfOneMeal) {
+
+        return new Price(this.value - priceOfOneMeal);
+    }
 }
