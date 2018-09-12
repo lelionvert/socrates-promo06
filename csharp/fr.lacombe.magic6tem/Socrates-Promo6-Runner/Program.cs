@@ -22,9 +22,9 @@ namespace Socrates_Promo6_Runner
                 Console.WriteLine("Do you cant some more ? Y / N ");
                 more = Console.ReadLine() == "Y";
             }
-            var coldMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(new DateTime(2018, 10, 25, 21, 0, 0)));
+        /*   var coldMeals = Restaurant.GetColdMeals(checkIns, new DinerTime(new DateTime(2018, 10, 25, 21, 0, 0)));
             Console.WriteLine("Number of cold meals : " + coldMeals);
-            Console.ReadLine();
+            Console.ReadLine(); */
         }
     }
 }
