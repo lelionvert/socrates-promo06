@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Socrates_Promo6
+namespace Socrates_Promo6.ParticipantManager
 {
     public class FirstMeal : IMeal
     {

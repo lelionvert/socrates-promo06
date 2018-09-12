@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Socrates_Promo6.ParticipantManager;
 
 namespace Socrates_Promo6
 {

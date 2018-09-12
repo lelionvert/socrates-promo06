@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using NFluent;
+using Socrates_Promo6.ParticipantManager;
 using Xunit;
 
 

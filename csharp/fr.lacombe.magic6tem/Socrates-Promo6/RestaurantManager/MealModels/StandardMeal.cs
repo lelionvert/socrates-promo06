@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Socrates_Promo6
+namespace Socrates_Promo6.ParticipantManager
 {
     public class StandardMeal : IMeal
     {

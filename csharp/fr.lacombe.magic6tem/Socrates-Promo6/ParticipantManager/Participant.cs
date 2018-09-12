@@ -1,4 +1,5 @@
 ﻿using System;
+using Socrates_Promo6.ParticipantManager;
 
 namespace Socrates_Promo6
 {

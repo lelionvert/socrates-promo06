@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace Socrates_Promo6
+namespace Socrates_Promo6.ParticipantManager
 {
     public interface IMeal
     {

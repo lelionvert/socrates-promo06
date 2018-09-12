@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using NFluent;
+using Socrates_Promo6.ParticipantManager;
 using Xunit;
 using Xunit.Sdk;
 

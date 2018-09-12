@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NFluent;
-using Socrates_Promo6.RestaurantManager.MealModels;
+using Socrates_Promo6.ParticipantManager;
 using Xunit;
 
 namespace Socrates_Promo6.Test
@@ -42,7 +40,7 @@ namespace Socrates_Promo6.Test
         }
 
         [Fact]
-        public void return_240_when_participant_chooses_noAccomodationPackage()
+        public void return_240_when_participant_chooses_no_Accomodation_Package()
         {
             ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation");
 
@@ -51,6 +49,32 @@ namespace Socrates_Promo6.Test
 
             Check.That(result).Equals(240);
         }
+
+        [Fact]
+        public void return_200_when_participant_chooses_no_Accomodation_Package_and_checkin_friday()
+        {
+            CheckIn checkinFriday = new CheckIn(new DateTime(2018, 09, 28));
+            ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation", checkinFriday);
+
+            PriceManager priceManager = new PriceManager();
+            int result = priceManager.GetPriceFor2(participantReservation);
+
+            Check.That(result).Equals(200);
+        }
+
+        [Fact]
+        public void return_200_when_participant_chooses_no_Accomodation_Package_and_checkout_saturday()
+        {
+            CheckIn checkinThursday = new CheckIn(new DateTime(2018, 09, 27));
+            CheckOut checkoutSaturday = new CheckOut(new DateTime(2018, 09, 30, 19,0,0));
+            ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation", checkinThursday, checkoutSaturday);
+
+            PriceManager priceManager = new PriceManager();
+            int result = priceManager.GetPriceFor2(participantReservation);
+
+            Check.That(result).Equals(200);
+        }
+
     }
 
 }

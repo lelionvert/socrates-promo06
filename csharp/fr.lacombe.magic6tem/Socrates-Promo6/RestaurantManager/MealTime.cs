@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Socrates_Promo6
+namespace Socrates_Promo6.ParticipantManager
 {
     public class MealTime
     {

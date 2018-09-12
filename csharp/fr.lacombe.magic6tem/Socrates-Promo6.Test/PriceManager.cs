@@ -17,6 +17,21 @@ namespace Socrates_Promo6.Test
         {
             return choicePrice[participantReservation.PackageChoice];
         }
+        public int GetPriceFor2(ParticipantReservation participantReservation)
+        {
+            var price = choicePrice[participantReservation.PackageChoice];
+            if (participantReservation.HasArrivedAfter(new DateTime(2018, 09, 27)))
+            {
+                price = price - 40;
+            }
+
+            if (participantReservation.HasLeftAfter(new DateTime(2018, 09, 30, 18, 0, 0)))
+            {
+                price = price - 40;
+            }
+
+            return price;
+        }
     }
 
     

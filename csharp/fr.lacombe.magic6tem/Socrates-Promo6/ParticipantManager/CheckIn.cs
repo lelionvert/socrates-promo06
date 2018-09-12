@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Socrates_Promo6
+
+namespace Socrates_Promo6.ParticipantManager
 {
-    public class CheckIn
+    public class CheckIn: ICheckIn
     {
         private readonly DateTime _arrivalTime;
 
@@ -12,22 +12,22 @@ namespace Socrates_Promo6
             _arrivalTime = arrivalTime;
         }
 
-        private bool IsSameDay(DateTime dinnerTime)
+        public bool IsSameDay(DateTime dinnerTime)
         {
             return _arrivalTime.Date.Equals(dinnerTime.Date);
         }
 
-        private bool IsAfter(DateTime date)
+        public bool IsAfter(DateTime date)
         {
             return _arrivalTime > date;
         }
 
-        private bool IsBefore(DateTime date)
+        public bool IsBefore(DateTime date)
         {
             return _arrivalTime < date;
         }
 
-        public bool IsGoingToBeLateFor(MealTime mealTime)
+         public bool IsGoingToBeLateFor(MealTime mealTime)
         {
             return IsSameDay(mealTime.Start) && IsAfter(mealTime.Start);
         }
@@ -37,4 +37,5 @@ namespace Socrates_Promo6
             return IsSameDay(mealTime.Start) && IsBefore(mealTime.Start);
         }
     }
+
 }
