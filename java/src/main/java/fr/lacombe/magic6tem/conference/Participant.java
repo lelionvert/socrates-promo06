@@ -1,5 +1,6 @@
 package fr.lacombe.magic6tem.conference;
 
+import fr.lacombe.magic6tem.price.PackageChoice;
 import fr.lacombe.magic6tem.restaurant.Diet;
 
 import java.time.LocalTime;
@@ -27,6 +28,14 @@ public class Participant {
         return arrivalTime.isAfter(limitHour);
     }
 
+    public Diet getDiet() {
+        return diet;
+    }
+
+    public boolean isArrivalTimeBefore(LocalTime limitHour) {
+        return arrivalTime.isBefore(limitHour);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,11 +50,4 @@ public class Participant {
         return Objects.hash(arrivalTime);
     }
 
-    public Diet getDiet() {
-        return diet;
-    }
-
-    public boolean isArrivalTimeBefore(LocalTime limitHour) {
-        return arrivalTime.isBefore(limitHour);
-    }
 }
