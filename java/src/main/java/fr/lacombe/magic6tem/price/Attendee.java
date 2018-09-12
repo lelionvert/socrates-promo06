@@ -8,6 +8,6 @@ class Attendee {
     }
 
     public boolean choose(PackageChoice packageChoice) {
-        return  this.packageChoice instanceof DoubleRoomPackage;
+        return  this.packageChoice.is(packageChoice);
     }
 }

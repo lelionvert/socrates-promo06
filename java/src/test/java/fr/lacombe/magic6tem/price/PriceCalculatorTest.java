@@ -22,4 +22,18 @@ class PriceCalculatorTest {
         Attendee attendee = new Attendee(doubleChoice);
         assertThat(AccountingManager.calculatePrice(attendee)).isEqualTo(new Price(510));
     }
+
+
+    @Test
+    void return_410_when_participant_is_in_time_and_triple_room() {
+        PackageChoice tripleRoomPackage = new TripleRoomPackage();
+        Attendee attendee = new Attendee(tripleRoomPackage);
+        assertThat(AccountingManager.calculatePrice(attendee)).isEqualTo(new Price(410));
+    }
+    @Test
+    void return_2400_when_participant_is_in_time_and_no_room() {
+        PackageChoice noRoomPackage = new NoRoomPackage();
+        Attendee attendee = new Attendee(noRoomPackage);
+        assertThat(AccountingManager.calculatePrice(attendee)).isEqualTo(new Price(240));
+    }
 }
