@@ -15,11 +15,9 @@ namespace Socrates_Promo6.Test
 
         }
 
-        public ParticipantReservation(string choice, ICheckIn checkin)
+        public ParticipantReservation(string choice, ICheckIn checkin) :this(choice,checkin,new CheckOut(new DateTime(2018,09,30,15,0,0)))
         {
-            _checkin = checkin;
-            _checkOut = new CheckOut(new DateTime(2018,09,09));
-            PackageChoice = choice;
+
         }
 
         public ParticipantReservation(string packageChoice, ICheckIn checkIn, CheckOut checkOut)
@@ -35,9 +33,9 @@ namespace Socrates_Promo6.Test
             return _checkin.IsAfter(dateTime);
         }
 
-        public bool HasLeftAfter(DateTime dateTime)
+        public bool HasLeftBefore(DateTime dateTime)
         {
-            return _checkOut.IsAfter(dateTime);
+            return _checkOut.IsBefore(dateTime);
         }
     }
 }

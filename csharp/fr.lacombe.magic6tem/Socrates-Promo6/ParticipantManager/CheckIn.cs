@@ -3,8 +3,9 @@
 
 namespace Socrates_Promo6.ParticipantManager
 {
-    public class CheckIn: ICheckIn
+    public class CheckIn : ICheckIn
     {
+
         private readonly DateTime _arrivalTime;
 
         public CheckIn(DateTime arrivalTime)
@@ -27,7 +28,7 @@ namespace Socrates_Promo6.ParticipantManager
             return _arrivalTime < date;
         }
 
-         public bool IsGoingToBeLateFor(MealTime mealTime)
+        public bool IsGoingToBeLateFor(MealTime mealTime)
         {
             return IsSameDay(mealTime.Start) && IsAfter(mealTime.Start);
         }
@@ -35,7 +36,7 @@ namespace Socrates_Promo6.ParticipantManager
         public bool IsGoingToBeOnTimeFor(MealTime mealTime)
         {
             return IsSameDay(mealTime.Start) && IsBefore(mealTime.Start);
+
         }
     }
-
 }

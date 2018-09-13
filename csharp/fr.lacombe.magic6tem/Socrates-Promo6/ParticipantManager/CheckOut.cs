@@ -15,5 +15,10 @@ namespace Socrates_Promo6.ParticipantManager
         {
             return _departureTime > date;
         }
+
+        public bool IsBefore(DateTime date)
+        {
+            return _departureTime < date;
+        }
     }
 }
