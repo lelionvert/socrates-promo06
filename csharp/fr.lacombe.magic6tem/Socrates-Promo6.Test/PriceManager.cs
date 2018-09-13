@@ -8,29 +8,19 @@ namespace Socrates_Promo6.Test
         private readonly DateTime _limitDateTimeForLastMeal;
         private readonly DateTime _limitDateTimeForFirstMeal;
 
-        private readonly Dictionary<String, int> choicePrice = new Dictionary<string, int>
-        {
-            {"Single", 610},
-            {"Double", 510},
-            {"Triple", 410 },
-            {"No Accomodation", 240}
+        private readonly Dictionary<String, int> _choicePrice;
 
-        };
-
-        public PriceManager(DateTime limitDateTimeForFirstMeal, DateTime limitDateTimeForLastMeal)
+        public PriceManager(DateTime limitDateTimeForFirstMeal, DateTime limitDateTimeForLastMeal, Dictionary<string, int> choicePrice)
         {
             _limitDateTimeForLastMeal = limitDateTimeForLastMeal;
             _limitDateTimeForFirstMeal = limitDateTimeForFirstMeal;
+            _choicePrice = choicePrice;
+            
         }
 
         public int GetPriceFor(ParticipantReservation participantReservation)
         {
-            return choicePrice[participantReservation.PackageChoice];
-        }
-
-        public int GetPriceFor2(ParticipantReservation participantReservation)
-        {
-            var price = choicePrice[participantReservation.PackageChoice];
+            var price = _choicePrice[participantReservation.PackageChoice];
             if (participantReservation.HasArrivedAfter(this._limitDateTimeForFirstMeal))
             {
                 price = price - 40;
