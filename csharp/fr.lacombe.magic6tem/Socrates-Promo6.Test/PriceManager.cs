@@ -17,11 +17,6 @@ namespace Socrates_Promo6.Test
 
         };
 
-        public PriceManager():this(new DateTime(2018, 09, 27), new DateTime(2018, 09, 30, 14, 0, 0))
-        {
-            
-        }
-
         public PriceManager(DateTime limitDateTimeForFirstMeal, DateTime limitDateTimeForLastMeal)
         {
             _limitDateTimeForLastMeal = limitDateTimeForLastMeal;
