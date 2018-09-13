@@ -11,7 +11,7 @@ namespace Socrates_Promo6.Test
         [Fact]
         public void return_610_when_participant_chooses_SinglePackage()
         {
-            ParticipantReservation participantReservation = new ParticipantReservation("Single");
+            ParticipantReservation participantReservation = new ParticipantReservation("Single", new CheckIn(new DateTime(2018, 09, 27)), new CheckOut(new DateTime(2018, 09, 30, 15, 0, 0)));
             PriceManager priceManager = new PriceManager();
             int result = priceManager.GetPriceFor(participantReservation);
 
@@ -21,7 +21,7 @@ namespace Socrates_Promo6.Test
         [Fact]
         public void return_510_when_participant_chooses_DoublePackage()
         {
-            ParticipantReservation participantReservation = new ParticipantReservation("Double");
+            ParticipantReservation participantReservation = new ParticipantReservation("Double", new CheckIn(new DateTime(2018, 09, 27)), new CheckOut(new DateTime(2018, 09, 30, 15, 0, 0)));
 
             PriceManager priceManager= new PriceManager();
             int result = priceManager.GetPriceFor(participantReservation);
@@ -31,7 +31,7 @@ namespace Socrates_Promo6.Test
         [Fact]
         public void return_410_when_participant_chooses_TriplePackage()
         {
-            ParticipantReservation participantReservation = new ParticipantReservation("Triple");
+            ParticipantReservation participantReservation = new ParticipantReservation("Triple", new CheckIn(new DateTime(2018, 09, 27)), new CheckOut(new DateTime(2018, 09, 30, 15, 0, 0)));
 
             PriceManager priceManager = new PriceManager();
             int result = priceManager.GetPriceFor(participantReservation);
@@ -42,7 +42,7 @@ namespace Socrates_Promo6.Test
         [Fact]
         public void return_240_when_participant_chooses_no_Accomodation_Package()
         {
-            ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation");
+            ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation", new CheckIn(new DateTime(2018, 09, 27)), new CheckOut(new DateTime(2018, 09, 30, 15, 0, 0)));
 
             PriceManager priceManager = new PriceManager();
             int result = priceManager.GetPriceFor(participantReservation);
@@ -54,7 +54,7 @@ namespace Socrates_Promo6.Test
         public void return_200_when_participant_chooses_no_Accomodation_Package_and_checkin_friday()
         {
             CheckIn checkinFriday = new CheckIn(new DateTime(2018, 09, 28));
-            ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation", checkinFriday);
+            ParticipantReservation participantReservation = new ParticipantReservation("No Accomodation", checkinFriday, new CheckOut(new DateTime(2018, 09, 30, 15, 0, 0)));
 
             PriceManager priceManager = new PriceManager();
             int result = priceManager.GetPriceFor2(participantReservation);

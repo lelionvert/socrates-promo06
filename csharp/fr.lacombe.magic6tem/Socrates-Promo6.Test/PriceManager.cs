@@ -16,10 +16,6 @@ namespace Socrates_Promo6.Test
             {"No Accomodation", 240}
 
         };
-        public int GetPriceFor(ParticipantReservation participantReservation)
-        {
-            return choicePrice[participantReservation.PackageChoice];
-        }
 
         public PriceManager():this(new DateTime(2018, 09, 27), new DateTime(2018, 09, 30, 14, 0, 0))
         {
@@ -30,6 +26,11 @@ namespace Socrates_Promo6.Test
         {
             _limitDateTimeForLastMeal = limitDateTimeForLastMeal;
             _limitDateTimeForFirstMeal = limitDateTimeForFirstMeal;
+        }
+
+        public int GetPriceFor(ParticipantReservation participantReservation)
+        {
+            return choicePrice[participantReservation.PackageChoice];
         }
 
         public int GetPriceFor2(ParticipantReservation participantReservation)
