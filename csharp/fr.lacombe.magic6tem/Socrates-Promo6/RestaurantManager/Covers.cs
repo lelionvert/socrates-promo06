@@ -12,10 +12,17 @@ namespace Socrates_Promo6.ParticipantManager
             _coversByDiet = coversByDiet;
         }
 
-        public int Vegetarian => _coversByDiet[Diet.VEGETARIAN];
-        public int Vegan => _coversByDiet[Diet.VEGAN];
-        public int Omnivorous => _coversByDiet[Diet.OMNIVOROUS];
-        public int Pescatarian => _coversByDiet[Diet.PESCATARIAN];
+        private int GetValueOrDefault(string diet)
+        {
+            if (_coversByDiet.ContainsKey(diet))
+                return _coversByDiet[diet];
+            return 0;
+        }
+
+        public int Vegetarian => GetValueOrDefault(Diet.VEGETARIAN);
+        public int Vegan => GetValueOrDefault(Diet.VEGAN);
+        public int Omnivorous => GetValueOrDefault(Diet.OMNIVOROUS);
+        public int Pescatarian => GetValueOrDefault(Diet.PESCATARIAN);
 
         public static Covers OfParticipants(IEnumerable<Participant> participants)
         {

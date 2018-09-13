@@ -23,6 +23,27 @@ namespace Socrates_Promo6
             return _meals.Select(meal => meal.From(participants)).ToList();
         }
 
+        public Dictionary<string,int> GetNumberOfCoversDietForAllEvent(List<Participant> participants)
+        {
+            var covers= GetNumberOfCoversDietPerMeal(participants);
+            Dictionary<string,int> coverByDiet = new Dictionary<string, int>
+            {
+                {Diet.OMNIVOROUS, 0},
+                {Diet.PESCATARIAN, 0},
+                {Diet.VEGAN, 0},
+                {Diet.VEGETARIAN, 0}
+            };
+            foreach (var cover in covers)
+            {
+                coverByDiet[Diet.PESCATARIAN] += cover.Pescatarian;
+                coverByDiet[Diet.VEGAN] += cover.Vegan;
+                coverByDiet[Diet.OMNIVOROUS] += cover.Omnivorous;
+                coverByDiet[Diet.VEGETARIAN] += cover.Vegetarian;
+            }
+
+            return coverByDiet;
+
+        }
     }
 }
 

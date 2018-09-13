@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Socrates_Promo6.Test
@@ -9,15 +8,10 @@ namespace Socrates_Promo6.Test
         private readonly DateTime _limitDateTimeForLastMeal;
         private readonly DateTime _limitDateTimeForFirstMeal;
 
-        private readonly Dictionary<String, int> _choicePrice;
-        private readonly IList<PackageChoice> _packageChoices;
-
-        public PriceManager(DateTime limitDateTimeForFirstMeal, DateTime limitDateTimeForLastMeal, Dictionary<string, int> choicePrice, IList<PackageChoice> packageChoices = null)
+        public PriceManager(DateTime limitDateTimeForFirstMeal, DateTime limitDateTimeForLastMeal)
         {
             _limitDateTimeForLastMeal = limitDateTimeForLastMeal;
             _limitDateTimeForFirstMeal = limitDateTimeForFirstMeal;
-            _choicePrice = choicePrice;
-            _packageChoices = packageChoices;
         }
 
         public int GetPriceFor(ParticipantReservation participantReservation)
@@ -28,7 +22,6 @@ namespace Socrates_Promo6.Test
                 price = price - 40;
             }
 
-            
             if (participantReservation.HasLeftBefore(this._limitDateTimeForLastMeal))
             {
                 price = price - 40;

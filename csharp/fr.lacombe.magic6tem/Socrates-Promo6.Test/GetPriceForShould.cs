@@ -27,7 +27,7 @@ namespace Socrates_Promo6.Test
         public void return_610_when_participant_chooses_SinglePackage()
         {
             ParticipantReservation participantReservation = new ParticipantReservation(_checkinThursday, _checkOut, new SinglePackage());
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(610);
@@ -38,7 +38,7 @@ namespace Socrates_Promo6.Test
         {
             ParticipantReservation participantReservation = new ParticipantReservation(_checkinThursday, _checkOut, new DoublePackage());
 
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(510);
@@ -48,7 +48,7 @@ namespace Socrates_Promo6.Test
         {
             ParticipantReservation participantReservation = new ParticipantReservation(_checkinThursday, _checkOut, new TriplePackage());
 
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(410);
@@ -59,7 +59,7 @@ namespace Socrates_Promo6.Test
         {
             ParticipantReservation participantReservation = new ParticipantReservation(_checkinThursday, _checkOut, new NoAccomodation());
 
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(240);
@@ -71,7 +71,7 @@ namespace Socrates_Promo6.Test
             CheckIn checkinFriday = new CheckIn(new DateTime(2018, 09, 28));
             ParticipantReservation participantReservation = new ParticipantReservation(checkinFriday, _checkOut, new NoAccomodation());
 
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(200);
@@ -84,7 +84,7 @@ namespace Socrates_Promo6.Test
             CheckOut checkoutSaturday = new CheckOut(new DateTime(2018, 09, 29, 20, 0, 0));
             ParticipantReservation participantReservation = new ParticipantReservation(checkinThursday, checkoutSaturday, new NoAccomodation());
 
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(200);
@@ -96,7 +96,7 @@ namespace Socrates_Promo6.Test
             CheckOut checkoutSaturday = new CheckOut(new DateTime(2018, 09, 29, 20, 0, 0));
             ParticipantReservation participantReservation = new ParticipantReservation(checkinFriday, checkoutSaturday, new NoAccomodation());
 
-            PriceManager priceManager = new PriceManager(startDateConference, endDateConference, choicePrice);
+            PriceManager priceManager = new PriceManager(startDateConference, endDateConference);
             int result = priceManager.GetPriceFor(participantReservation);
 
             Check.That(result).Equals(160);
