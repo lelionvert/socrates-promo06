@@ -7,12 +7,12 @@ namespace Socrates_Promo6.Test
     {
         private readonly CheckOut _checkOut;
         private readonly ICheckIn _checkin;
-        public string PackageChoice { get; }
+        public PackageChoice PackageChoice2 { get; }
 
-        public ParticipantReservation(string packageChoice, ICheckIn checkIn, CheckOut checkOut)
+        public ParticipantReservation(ICheckIn checkIn, CheckOut checkOut, PackageChoice packageChoice2)
         {
             _checkOut = checkOut;
-            PackageChoice = packageChoice;
+            PackageChoice2 = packageChoice2;
             _checkin = checkIn;
         }
 
